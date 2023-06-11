@@ -1,0 +1,326 @@
+#scopeButton{
+    zoom: 1.4;
+    top: 36%;
+}
+#toolbox{
+    zoom: 1.4;
+}
+#topbar{
+    width: 96.5%;
+    zoom: 1.3;   
+    border-width: 2.5px;
+    top: 0px;
+    border-radius: 8px;
+}
+p{
+    zoom: 1.5;
+}
+#tilesHolder{
+    margin-top: 28px;
+}
+#widener{
+
+}
+#search{
+    margin-right: 6px;
+}
+#col1{
+    width: 100%;
+    left: 45%;
+    height: 22%;
+    position: absolute;
+    bottom: 0px;
+}
+#col2{
+    transform: scale(1.1);
+    top: 18px;
+    height: min-content;
+    right: 0px;
+}
+.pointer{
+    background-color: #ffffff94;
+    padding: 135px 4px 135px 4px;
+    border-radius: 25px;
+    height: 86px;
+}
+#leftPointer{
+    top: 24%;
+    left: 1%;
+}
+#rightPointer{
+    top: 24%;
+    right: 1%;
+}
+#viewPart,#itemClaim{
+    height: 70%;
+    width: 82%;
+    top:21%;
+    border-radius: 35px;
+    background-size: 100% 116%;
+}
+#zoomImg{
+    transform: scale(1.2);
+    z-index: 1000000;
+}
+#goHome{
+    zoom: 1.4;
+}
+#inquiry{
+    width: 67%;
+    transform: translateY(-1px);
+}
+#search{
+    width: 27%;
+    padding-top: 1px;
+}
+#locationAnimationWrap{
+    zoom: 1.6;
+    margin-top: 28px;
+}
+#zoomImg{
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 79%;
+    margin-left: 0px;
+}
+#partView_quantity{
+    box-shadow: 1px 1px 1px 1px gray;
+font-size: 20px; margin: -40px 0px 15px 312.714px; bottom: 22px; left: 20px;
+}
+
+#controlPanel{
+    height: 23px;
+    width: 167px;
+    text-align: center;
+    font-size: 100px;
+    border: 5px solid #47daff;
+    border-radius: 69px;
+    background: var(--controlPanel_Background);
+}
+#editPartDataButton{
+    width: 28px;
+    position: relative;
+    background-color: var(--controlPanel_Background);
+    margin-top: -10px;
+    margin-left: 40px;
+    cursor: pointer;
+    font-family: Aldrich-Regular;
+    padding: 4px;
+    border-radius: 106px;
+    font-size: 18px;
+    padding-top: 7px;
+    margin-bottom: -104px;
+    border: 6px solid black;
+    padding: 30px;
+    height: 10px;
+    margin-bottom: -107px;
+    padding-top: 5px;
+    border-width: 1px 4px 6px 4px;
+    transform: translate(0px, -100px);
+    position: absolute;
+    bottom: 17px;
+    box-shadow: 0px 0px 7px 5px #ffffff;
+}
+#minus1{
+    display: block;
+    background-color: var(--controlPanel_Background);
+    color: black;
+    width: 138px;
+    margin-left: 0px;
+    font-size: 44px;
+    height: 68px;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    font-weight: bold;
+    margin-top: 37px;
+    border-right: unset;
+    margin-bottom: -86px;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+}
+#add1{
+    display: inline;
+    position: absolute;
+    background-color: var(--controlPanel_Background);
+    color: black;
+    width: 136px;
+    margin-top: 17px;
+    height: 30px;
+    border-top-right-radius: 127px;
+    border-bottom-right-radius: 127px;
+    font-weight: bold;
+    border-left: 5px solid #47daff;
+    font-size: 37px;
+}
+#hiddenMinusBlocker{
+    width: 142px;
+    height: 60px;
+    margin-top: -12px;
+    margin-left: -1px;
+    border-radius: 78px 0px 0px 78px;
+    transform: translate(0px, 42px);
+}
+#delete{
+    display: inline-block;
+    width: 80px;
+    height: 30px;
+    margin-left: 616px;
+    /* margin-top: -100px; */
+    position: relative;
+    background-color: var(--controlPanel_Background);
+    border-radius: 260px;
+    padding-top: 14px;
+    border: 6px solid black;
+    border-width: 1px 4px 6px 4px;
+    box-shadow: 0px 0px 7px 5px #ffffff;
+    bottom: -3px;
+}
+#partView_partName{
+    font-size: 30px;
+    margin: 0px;
+    width: 103.5%;
+}
+#col2{
+    margin-left: 0px;
+    width: 100%;
+}
+#retrievedImg{
+  float: left;
+  margin-left: 77px;
+  display: block;
+  max-width: 272px;
+  max-height: 200px;
+  width: auto;
+  height: auto;
+  }
+.mobileWrap{font-size: 25px;width: 53%;float: right;margin-right: 20px;}
+#partView_location{
+    right: 55px;position: absolute;margin-top: 74px;width: 40%;right: -135px;
+    font-size: 30px;
+}
+#col3{
+    width: 56%;
+    float: right;
+    position: relative;
+    top: 43%;
+    font-size: 24px;
+    margin-right: 7px;
+    height: 100%;
+}
+#description_header{
+    display: none;
+}
+#editPartImg{
+    height: 45px;
+    margin-top: -6px;
+    margin-left: -5px;
+}
+#controlWrap{
+    display: block;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    border-radius: 41px;
+    bottom: 12px;
+    position: absolute;
+    border-width: 1px 4px 6px 4px;
+    width: 177px;
+}
+
+#minus1_inside{
+    margin-top: -41px;
+    transform: translate(-26px,-17px);
+}
+#plus1_inside{
+    margin-top: -7px;
+    width: 76px;
+}
+#numControl_img{
+    height: 35px;
+    margin-top: -8px;
+}
+#loadPartsButton{
+    zoom: 1.5;
+}
+#toolbox_label{
+    transform: rotate(-90deg);
+    margin-left: -66px;
+    margin-top: 40px;
+    margin-bottom: -63px;
+    width: 100px;
+    border-width: 2px;
+}
+#menuContainer{
+    margin-right: 4px
+}
+#lookNextCatBlock,#lookNextCatBlock_end{
+    font-size: 32px;
+}
+#spaceToGoHomeMessage{
+    font-size: 33px;
+    width: 500px;
+    margin-top: 20px;
+    margin-bottom: 60px;
+}
+#description_text{
+    bottom: 114px;
+    position: absolute;
+    width: 100%;
+} 
+.colBack{height: 100%;width: 100%;top: 0px;left: 0px;position: absolute;z-index: -2;}
+#cat1, #cat2, #cat2_end, #cat3, #cat3_end, #cat4, #cat4_end{
+    font-size: 29px;
+    padding: 2px 7px 2px 7px;
+    border-radius: 9px;
+    margin: 4px;
+}
+.catRow{
+    margin-bottom: 64px;
+}
+#catMap_buttonBar{
+    zoom: 1.5;
+    height: 22px;
+    margin-bottom: 10px;
+    width: 285px;
+}
+#catagoriesContianer{
+    margin-top: 35px;
+}
+#catMap_moveLocation, #catMap_editLocation, #addCat{
+    left:50%;
+    transform: translateX(-50%);
+    width: 84%;
+    padding:4px;
+    bottom: 9px;
+    text-align: center;
+    border-radius: 30px 30px 10px 10px;
+    bottom: 5px;
+    font-size: 37px;
+}
+#branchInput{
+    border: 1px solid grey;
+    border-radius: 5px;
+    margin-bottom: 6px;
+    margin-top: 8px;
+}
+#ML_cancelButton{
+    font-size: 34px;
+}
+#newCatInput{
+    margin-top: 8px;
+}
+#addLeafButton{
+    font-size: 33px;
+}
+#collapseBtn{
+    height: 107px;
+    width: 110px;
+    text-align: center;
+    border-radius: 15px;
+    right: 10px;
+    bottom: 10px;
+}
+#collapseArr{
+    height: 100px;
+    width: 100px;
+}

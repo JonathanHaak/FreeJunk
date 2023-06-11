@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <script type="text/javascript" src="js/jQuery.js"></script>
+        
+        <link rel = "stylesheet" href="IS.css">
+    </head>
+    <body>
+        <a id="picContainer"><img id="imagePlaceholder" src="DropImageHere.png" onclick="document.getElementById('picInput').click()"></a>
+
+        <input type="file" id="picInput" accept="application/jpg, application/png, application/svg, application/gif, application/jpeg" style="display: none;">
+
+        <script src="IS.js"></script>
+        
+        
+        <form action="/" method="post" style="display: none" id="hiddenForm">
+            <input type="text" name="command" value="" id="command_hiddenInput">
+            <input type="text" name="data" value="" id="data_hiddenInput">
+            <input type="text" name="uri" value="" id="uri_hiddenInput">
+            <input type="text" name="timestamp" value="" id="captureTimestamp_hiddenInput">
+        </form>
+    </body>
+</html>

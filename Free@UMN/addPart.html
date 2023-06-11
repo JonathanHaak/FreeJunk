@@ -1,0 +1,143 @@
+<html allowusermedia allow="camera;microphone">
+    <head>
+        <title>Free @ UMN</title>
+        <script type="text/javascript" src="js/jQuery.js"></script>
+        <script type="text/javascript" src="js/globals.js"></script>
+        <link href="Astradux.css" rel="stylesheet">
+        <link href="animations.css" rel="stylesheet">
+        <link rel="icon" type="image/png" href="Style_File/AstraduxLogo.png">
+        <script type="text/javascript" src="js/partModification.js"></script>
+        <script type="text/javascript" src="js/pageNavigation.js"></script>
+        <script type="text/javascript" src="js/toolFunctionality.js"></script>
+        <script type="text/javascript" src="js/webcamLib.js"></script>
+        <script type="text/javascript" src="js/universalFuncs.js"></script>
+        <script type="text/javascript" src="js/fetch.js"></script>
+        <script type="text/javascript" src="js/cookieFuncs.js"></script>
+        <script type="text/javascript" src="Style_File/colors.js"></script>
+        <link href="Style_File/colors.css" rel="stylesheet">
+    </head>
+    <body id="body">
+        <div id="backdrop" style="z-index: 0"></div>
+        <div id="topbar">
+            <a href=Astradux.html><img src="Style_File/AstraduxSignage.png" id="A"></a>
+            <div id="menuContainerContainer">
+                <div id="menuContainer"><a href="catagoryMap.html">Categories</a></div>
+            </div>
+            <div id="search"><label id="searchLabel">Search: </label><input id="inquiry" size="10">
+            </div>
+        </div>
+        <div id="widener"></div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div id="inputContainer"> <!--put all the input stuff in front of the backdrop-->
+            <a id="picContainer"><img id="imagePlaceholder" src="Images/DropImageHere.png" onclick="imageInputClick()"></a>
+
+            <input type="file" id="picInput" accept="application/jpg, application/png, application/svg, application/gif, application/jpeg" style="display: none;" onchange="refreshImage()">
+            <div id="cameraIconWrap"><img id="cameraIcon" src="Images/cameraIcon.png"></div>
+            <div id="inputBlock">Part Name: <input type="text" id="name" onfocusout="partNameProcessing()"><div id="autoCapsBar">Auto-Cap - ON</div></div>
+            <div id="inputBlock">Location: <input type="text" onfocusout="checkLocExistence()" onfocus="resetLocAnimation()" id="location"><div id="dataLockWrap" onclick="lockorunlock_location()"><img src="Images/Unlocked.png" id="loc_dataLock" class="dataLock"></div><span style="color:white">.....</span><input type="checkbox" id="isBin" onclick="quantityON_OFF()"><div id="istypeText">Is this entry a "type"?</div><div id="dataLockWrap" onclick="lockorunlock_type()"><img src="Images/Unlocked.png" id="type_dataLock" class="dataLock"></div></div>
+            <div id="inputBlock_tags">Tags: <input type="text" id="tags"></div>
+            <div id="inputBlock"><div id="quantWrap">Quantity: <input type="text" id="quantity" onfocusout="quantityProcessing()"></div></div>
+            <div id="inputBlock">Category: <input type="text" id="catagory"><div id="dataLockWrap" onclick="lockorunlock_catagory()"><img src="Images/Unlocked.png" id="cat_dataLock" class="dataLock"></div><i><span style="color:white">.....</span>     or use map</i></div>
+            <div id="descriptionWrap"><div id="innerDescriptionWrap"><div id="description_inputBlock" style="display: none"><div id="discription_Marker">Details:&nbsp;</div><textarea type="text" id="description" rows="1"></textarea></div></div></div>
+            <button id="addButton" class="styledBtn" onclick="addtoInventory()">Add Part</button>
+            <div id="abortBtnWrap"><button id="abortBtn">Abort PartMod</button></div>
+            <div id="undoBtnWrap"><button id="undoBtn">Undo</button></div>
+            <button id="addDescription" onclick="Description_ONOFF()">+Details</button>
+            <button id="resetBtn" onclick="resetPartInput()">reset</button>
+            <div id="SuperFastModeBar" onclick="toggleSpeedMode()">Enter Speed Mode</div>
+        </div>
+
+        <div id="CatagorySliderBtn" class="sliderBtn">Catagoies</div>
+        <div id="selectCatContainer"><div id="catlabel">Category Map</div><div id="mainCatCont"></div><div id="catagoryLoadingMsg">Fetching Catagory Map...</div></div>
+        <div id="addCat2"><button id="addLeafButton" onclick="executeAddCat()" style="font-size: 10px">Add Leaf</button><input id="newCatInput" style="font-size: 10px"> to Branch <input value="Focus to select from map" id="branchInput" style="font-size: 10px"></div>
+
+        <div id="LocationSliderBtn" class="sliderBtn">Locations</div>
+        <div id="locationMultitool">
+            <div id="catlabel" style="margin-left: 2px">
+                <i>Locations</i>
+            </div>
+            <img id="canvasBackground" src="" width="300" height="200">
+            <canvas id="locationCanvas" height="200" width="300"></canvas>
+            <div id="drawingMarkersMessage">Drawing Markers...</div>
+            <div id="locMapHome" onclick="goHome()">
+                <img src="Images/homeicon.svg" height="25" style="padding: 2px" id="homeBtnImg"></div>
+            <div id="locMapBack" onclick="goBack()"><img src="Images/backicon.png" height="25" style="padding: 2px" id="backBtnImg"></div>
+            <div id="locMapEdit"><img id="locMapEditImg" src="Images/pencilIcon.png" height="20px"></div>
+            <div id="locCreationWrap"><div id="locCreationWrap_text">New Location Name:</div>
+                <input id="locCreateInput"></div><button id="createPathwayButton" class="styledBtn" onclick="initialte_or_cancel_CreateLoc()">Add Location</button>
+            <div id="locationsLoadingMsg">Fetching Location Map...</div>
+            <div id="addHoursBox_wrap">
+                <button id="addHours_btn" class="styledBtn">Add Hours to location</button>
+                <div id="addHours_actionBox">
+                    Location: <input id="locationLine2"><br>
+                    Hours: <input id="hoursLine"><br>
+                    <button id="addHours_done">Add Hours</button>
+                    <button id="addHours_cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+        </div>
+    <div id="container"><video autoplay="true" id="videoElement"></video></div>
+
+    <div id="spaceToHome"></div>
+
+    <div id="keyboardShortcutsWrapper" onclick="collapseKS()">
+        <div id="keyboardShortcutsTab">Keyboard Shortcuts</div>
+        <div id="keyboardShortcuts">
+            <div id="keyboardShortcutsList">>Space to home<br>>c to categoryMap<br>>Tab for next<br>>Shift-Tab for Previous<br>>Enter to split tag<br>>r to reset add a part<br>>p to activate camera</div>
+        </div>
+    </div>
+
+    <div id="partModBannerWrap"><div id="partModBanner">- Mod Mode Active -</div></div>
+
+    <div id="goHome"><div id="goHomeInnerdiv" onclick="sendUseToAstradux()">&gt; Go Home &#60;</div></div>
+    <script>
+        function sendUseToAstradux(){
+            window.location.href = "Astradux.html";
+        }
+    </script>
+
+    <div id="partAddedConfirmationBlock"><img src="Images/checkmark.png" height="40px" id="checkboxImage"><div id="confirmationText">Part Information Added to Inventory</div></div>
+
+    <div id="redArrowWrap"><img src="Images/redArrow.svg" id="redArrowImg"></div><div id="locInexistentMessage">It looks like the location you entered doesn't exist in the locations array. Please add this new location to the map</div>
+
+    <div id="curtian"></div>
+
+    <div id="cameraBox_border">
+        <video id="webcam" autoplay playsinline></video>
+        <canvas id="canvas" class="d-none" style="display:none"></canvas>
+        <audio id="snapSound" src="sounds/shutter.mp3" preload = "auto"></audio>
+        <a id="downloadLink" href="img.png" download="output.png"></a>
+        <meta id="cameraStatus_meta" content="unactive">
+    </div>
+    <div id="camFlipBtn"><img id="camFlipImg" src="Images/flipIcon.png"></div>
+
+    <input id="file-input_forNewLoc" type="file" accept="application/jpg, application/png, application/svg, application/gif, application/jpeg" name="name" style="display: none;"/>
+
+    <form action="/addPart.html" method="post" style="display: none" id="hiddenForm" enctype="multipart/form-data">
+        <input type="text" name="command" value="" id="command_hiddenInput">
+        <input type="text" name="data" value="" id="data_hiddenInput">
+        <input type="text" name="uri" value="" id="uri_hiddenInput">
+        <input type="text" name="timestamp" value="" id="captureTimestamp_hiddenInput">
+    </form>
+
+    <script type="text/javascript" src="js/addPart.js"></script>
+    <script type="text/javascript" src="./js/locationMap.js"></script>
+
+    <img src="Images/subtleLoading.gif" style="visibility: hidden;height: 1px;">
+
+    <script type="text/javascript" src="deviceOptimization/deviceOptimizer.js"></script>
+    <script type="text/javascript" src="js/locationHours.js"></script>
+
+    <div style="z-index: 4010;position: relative;width: fit-content;bottom: 0;display: none;">
+        <input id="imageFile" name="imageFile" type="file" class="imageFile"  accept="image/*"   /> 
+        <input type="button" value="Resize Image"  onclick="ResizeImage()"/> 
+        <br/>
+        <img src="" id="preview">
+        <img src="" id="output">
+    </div>
+    </body>
+</html>

@@ -1,0 +1,89 @@
+<html>
+    <head>
+        <title>Free @ UMN</title>
+        <script type="text/javascript" src="js/globals.js"></script>
+        <link href="Astradux.css" rel="stylesheet">
+        <link href="animations.css" rel="stylesheet">
+        <link rel="icon" type="image/png" href="Style_File/AstraduxLogo.png">
+        <script type="text/javascript" src="js/jQuery.js"></script>
+        <script type="text/javascript" src="js/pageNavigation.js"></script>
+        <script type="text/javascript" src="js/fetch.js"></script>
+        <script type="text/javascript" src="js/toolFunctionality.js"></script>   
+        <script type="text/javascript" src="js/cookieFuncs.js"></script>
+        <script type="text/javascript" src="Style_File/colors.js"></script>
+        <link href="Style_File/colors.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="topbar">
+            <a href=Astradux.html><img src="Style_File/AstraduxSignage.png" id="A"></a>
+            <div id="menuContainerContainer">
+                <div id="menuContainer" class="onPage" style="cursor: default">Categories</div>
+            </div>
+            <div id="search"><label id="searchLabel">Search: </label><input id="inquiry" size="10">
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div id="widener"></div>
+
+        <div id="catagoriesContianer"></div>
+        <div id="catagoryLoadingMsg">Fetching Catagory Map...</div>
+        <div id="blurBar"></div>
+        <br>
+        <br>
+        <br>
+        <!--CSS can currently support a depth of 4-->
+
+        <div id="catMap_buttonBar">
+            <div id="addCatBtn" class="barButton">Add</div>
+            <div id="moveFolderBtn" class="barButton" onclick="alert('This feature is currently unavailable');">Move</div>
+            <div id="editFolderBtn" class="barButton" onclick="alert('This feature is currently unavailable');">Edit</div>
+            <div id="DeleteFolderBtn" class="barButton" onclick="freeCollapse();alert('This feature is currently unavailable');">Delete</div>
+        </div>
+
+        <div id="addCat" style="display: none">
+            <button id="addLeafButton" onclick="executeAddCat()" class="catActionBtn">Add Leaf</button>
+            <input type="text" name="newCat" id="newCatInput"> to Branch 
+            <input type="text" name="branch" class="clickToSelect" value="Focus to select from map" id="branchInput">
+            <div id="ML_cancelButton" class="catagoryBtnCancelBtn">Cancel</div>
+        </div>
+        
+        <div id="catMap_moveLocation" style="display: none">
+            <button id="moveLeafButton" onclick="executeMoveCat()" class="catActionBtn">Move Catagory</button>
+            Move <input id="cat_toMove" class="clickToSelect" autocomplete="off" value="Focus to select from map" style="color: rgb(170, 170, 170);"> to Branch <input value="Focus to select from map" id="cat_moveTo" class="clickToSelect" autocomplete="off" style="color: rgb(170, 170, 170);">
+            <div id="ML_cancelButton" class="catagoryBtnCancelBtn">Cancel</div>
+        </div>
+
+        <div id="catMap_editLocation" style="display: none">
+            <button id="moveLeafButton" onclick="executeMoveCat()" class="catActionBtn">Edit Catagory</button> Change 
+            <input id="cat_toMove" class="clickToSelect" autocomplete="off" value="Focus to select from map" style="color: rgb(170, 170, 170);"> 's name to <input id="cat_newName">
+            <div id="EB_cancelButton" onclick="exitCMeditMode()" class="catagoryBtnCancelBtn">Cancel</div>
+        </div>
+
+        <div id="keyboardShortcutsWrapper" onclick="collapseKS()">
+            <div id="keyboardShortcutsTab">Keyboard Shortcuts</div>
+            <div id="keyboardShortcuts">    
+                <div id="keyboardShortcutsList">>Space to home<br>>a to addAPart</div>
+            </div>
+        </div>
+
+        <div id="goHome"><div id="goHomeInnerdiv" onclick="sendUserToAstradux()">&gt; Go Home &#60;</div></div>
+        
+        <form action="/catagoryMap.html" method="post" style="display: none" id="hiddenForm" enctype="multipart/form-data">
+            <input type="text" name="command" value="" id="command_hiddenInput">
+            <input type="text" name="data" value="" id="data_hiddenInput">
+            <button name="hiddenSubmit" id="addCat_hiddenSubmitButton" type="submit"></button>
+        </form>
+        
+        <script>
+            function sendUserToAstradux(){
+                window.location.href = "Astradux.html";
+            }
+        </script>        
+        <div id="backdrop"></div>
+        <script type="text/javascript" src="js/displayCatagories.js"></script>
+        <div id="curtian"></div>
+        <script type="text/javascript" src="deviceOptimization/deviceOptimizer.js"></script>
+    </body>
+</html>

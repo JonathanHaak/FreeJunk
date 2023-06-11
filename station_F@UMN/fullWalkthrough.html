@@ -1,0 +1,229 @@
+<html>
+    <head>
+        <title>:: Add Item In Person ::</title>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="path/to/your/jquery_file.js"><\/script>')</script>
+        <link rel="icon" href="" type="image/x-icon">
+        <link href="./css/fullWalkthrough.css" rel="stylesheet">
+        <script src="./js/globals.js"></script>
+    </head>
+    <body>
+        <div class="poofBox">
+            <div id="messageWrapper">
+                <div id="insideMessageWrapper">
+                    <div id="ClickAnyKeyToAddItemMessageBox">Click Any Key to Donate</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="poofBox"><div class="objContainer p1 right disapear8"><div id="triange1" class="triangle shape backSpinning"></div></div></div>
+        <div class="poofBox"><div class="objContainer p1 left disapear1"><div id="triange2" class="triangle shape spinning"></div></div></div>
+        <div class="poofBox"><div class="objContainer p2 right disapear7"><div id="rectange1" class="rectangle shape backSpinning4"></div></div></div>
+        <div class="poofBox"><div class="objContainer p2 left disapear2"><div id="rectange2" class="rectangle shape spinning"></div></div></div>
+        <div class="poofBox"><div class="objContainer p3 right disapear6"><div id="halfCircle1" class="halfCircle shape backSpinning2"></div></div></div>
+        <div class="poofBox"><div class="objContainer p3 left disapear3"><div id="halfCircle2" class="halfCircle shape backSpinning3"></div></div></div>
+        <div class="poofBox"><div class="objContainer p4 right disapear5"><div id="star1" class="star shape spinning"></div></div></div>
+        <div class="poofBox"><div class="objContainer p4 left disapear4"><div id="star2" class="star shape spinning"></div></div></div>
+
+        <div id="checkerboxContianer">
+            <div class="checkerboxRow">
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+            </div>
+            <div class="checkerboxRow">
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+            </div>
+            <div class="checkerboxRow">
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+            </div>
+            <div class="checkerboxRow">
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+            </div>
+            <div class="checkerboxRow">
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+            </div>
+            <div class="checkerboxRow">
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+                <div class="checkerBox"></div>
+            </div>
+
+        </div>
+
+        <div id="criteriaPageWrap">
+            <div id="criteriaPanelWrap">
+                <span id="donatedItemSpan" class="fadeInAndUp">donations must...</span>
+                <div id="criteria1_block" class="criteriaBlock fadeInAndUpWait">
+                    <div id="criteria1_num" class="criteriaNum">1</div>
+                    <div id="criteriaText1" class="criteriaText">fit in bin</div>
+                    <div id="criteria1_diologue" class="crieriaDiologue"></div>
+                    <div id="criteria1_match" class="matchbox">
+                        <img id="matchImg1" class="matchImg" src="./images/iphoneCase.jpg">
+                        <img id="checkmark1" class="checkmark" src="./images/checkmark.png">
+                    </div>
+                    <div id="criteria1_notmatch" class="matchbox">
+                        <img id="noMatchImg1" class="matchImg" src="./images/microwave.png">
+                        <img id="x1" class="x" src="./images/x.png">
+                    </div>
+                </div>
+                <div id="criteria2_block" class="criteriaBlock">
+                    <div id="criteria2_num" class="criteriaNum">2</div>
+                    <div id="criteriaText2" class="criteriaText">have value<span class="subtext" id="subtext1"></span></div>
+                    <div id="criteria2_diologue" class="crieriaDiologue"></div>
+                    <div id="criteria2_match" class="matchbox">
+                        <img id="matchImg2" class="matchImg" src="./images/iphoneCase.jpg">
+                        <img id="checkmark2" class="checkmark" src="./images/checkmark.png">
+                    </div>
+                    <div id="criteria2_notmatch" class="matchbox">
+                        <img id="noMatchImg2" class="matchImg" src="./images/artsAndCraftsEx.png">
+                        <img id="x2" class="x" src="./images/x.png">
+                    </div>
+                </div>
+                <div id="criteria3_block" class="criteriaBlock">
+                    <div id="criteria3_num" class="criteriaNum">3</div>
+                    <div id="criteriaText3" class="criteriaText">not be too obscure <span class="subtext" id="subtext2"></span></div>
+                    <div id="criteria3_diologue" class="crieriaDiologue"></div>
+                    <div id="criteria3_match"></div>
+                    <div id="criteria3_match" class="matchbox">
+                        <img id="matchImg3" class="matchImg" src="./images/iphoneCase.jpg">
+                        <img id="checkmark3" class="checkmark" src="./images/checkmark.png">
+                    </div>
+                    <div id="criteria3_notmatch" class="matchbox">
+                        <img id="noMatchImg3" class="matchImg" src="./images/piston.png">
+                        <img id="x3" class="x" src="./images/x.png">
+                    </div>
+                </div>
+            </div>
+
+            <div id="spacebarWrapper" class="fadeInAndUpWait2">
+                <div id="spacebarWrapper2">
+                    <div id="spacebarKeyTop">Spacebar</div>
+                    <div id="spacebarKeyBottomWrap">
+                        <div id="spacebarKeyBottom"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="demoSkip" class="fadeInAndUp">press n to skip demo</div>
+        </div>
+
+        <div id="format1Wrap">
+            <div id="formatInfoOutline" class="delayedFadeIn">
+                <div class="orangeStarShape" id="orangeStar1"></div>
+                <div class="orangeStarShape" id="orangeStar2"></div>
+                <div class="orangeStarShape" id="orangeStar3"></div>
+
+                <div id="circleShrinkWrap" class=""><div id="greenCircleShape" class=""></div></div>
+                <div id="squareShrinkWrap" class=""><div id="blueSquareShape" class=""></div></div>
+                <div id="triangleShrinkWrap" class=""><div id="greenTriangleShape" class=""></div></div>
+
+                <div id="cameraReplica">
+                    <div id="cameraOutline" class="cameraElement">
+                        <div id="cameraButton" class="cameraElement"></div>            
+                        <div id="cameraLine" class="cameraElement"></div>
+                        <div id="cameraLens" class="cameraElement"></div>
+                    </div>
+                    <div id="cameraFlashlineWrap" class="cameraElement">
+                        <div id="flashline1" class="flashLine cameraElement"></div>
+                        <div id="flashline2" class="flashLine cameraElement"></div>
+                        <div id="flashline3" class="flashLine cameraElement"></div>
+                    </div>
+                </div>
+
+                <div id="shelfGridWrap">
+                    <div id="shelfGridBox"></div>
+                    <div id="shelfGridBox"></div>
+                    <div id="shelfGridBox"></div>
+                    <div id="shelfGridBox"></div>
+                    <div id="shelfGridBox"></div>
+                    <div id="shelfGridBox" class="sinkBox"></div>
+                    <div id="shelfGridBox"></div>
+                    <div id="shelfGridBox"></div>
+                    <div id="shelfGridBox"></div>
+                    <div id="shelfGridBox"></div>
+                    <div id="shelfGridBox"></div>
+                    <div id="shelfGridBox"></div>
+                    <div id="shelfGridBox"></div>
+                    <div id="shelfGridBox"></div>
+                    <div id="shelfGridBox"></div>
+                    <div id="shelfGridBox"></div>
+                </div>
+
+                <div id="outerspacebarWrap">
+                    <div id="spacebarWrap" class="delayedFadeIn3">
+                        <div id="spacebarKeyTop">Spacebar</div>
+                        <div id="spacebarKeyBottomWrap">
+                            <div id="spacebarKeyBottom"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <span id="dialogueWrap" class="delayedFadeIn2">Take pictures of items one at a time</span>
+            </div>
+
+            <div id="fadeCurtian"></div>
+        </div>
+
+        <form action="/" method="post" style="display: none" id="hiddenForm">
+            <input type="text" name="command" value="" id="command_hiddenInput">
+            <input type="text" name="data" value="" id="data_hiddenInput">
+        </form>
+        <script src="./js/fullWalkthrough.js"></script>
+    </body>
+</html>

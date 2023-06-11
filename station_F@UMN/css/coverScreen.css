@@ -1,0 +1,28 @@
+body{background: black}
+#rainbowWheel{
+    width: 280vw;
+    height: 260vw;
+    animation: spin 50s linear infinite;
+    left: -18%;
+    position: fixed;
+    bottom: -180%;
+    filter: blur(18px);
+}
+@keyframes spin{
+    0%{transform: rotate(0deg)}
+    100%{transform: rotate(360deg)}
+}
+#leftBlackBlocker{height: 100%;width: 60px;left: 0px;top: 0px;}#rightBlackBlocker{right: 0px;height: 100%;width: 50%;top: 0px;}#topBlackBlocker{top: 0px;right: 0px;width: 100%;height: 10%;}#bottomBlackBlocker{bottom: 0px;left: 0px;height: 50px;width: 100%;}.blackBlocker{background: black;position: fixed;}
+
+#imageTile1{bottom: 60px;right: 410px;}#imageTile2{bottom: 245px;right: 410px;}#imageTile3{bottom: 60px;right: 225px;}#imageTile4{right: 225px;bottom: 245px;}#imageTile5{
+    right: 225px;
+    bottom: 430px;
+}#imageTile6{right: 40px;bottom: 245px;}#imageTile7{right: 40px;bottom: 430px;}.imageTile{background: white;width: 180px;height: 180px;position: fixed;transform: rotate(-90deg);}
+.tileImg{width: 100%;height: 100%}
+#img1{}
+#img2{}
+#img3{}
+#img4{}
+#img5{}
+#img6{}
+#img7{}
