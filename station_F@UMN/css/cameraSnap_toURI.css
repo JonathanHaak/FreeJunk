@@ -1,0 +1,53 @@
+body, #QRBoxCode{
+    transition: 200ms;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.56, 0.08, 0.34, 0.87);
+    transition-delay: 0s;
+    transition-property: all;
+}
+video {
+    /* override other styles to make responsive */
+    width: 100%    !important;
+    height: auto   !important;
+}
+#obj_picInput{
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    background: blue;
+    width: 910px;
+}
+#camFlipImg{
+    width: 100px;
+    user-select: none;
+}
+#camFlipImg:active{
+    transform: rotate(180deg);
+}
+#camFlipBtn{
+    position: fixed;
+    top: 50%;
+    display: none;
+    left: 94%;
+    z-index: 600;
+    transform: translate(-94%,-50%);
+    cursor: pointer;
+    opacity: 0.3;
+    background-color: rgb(255 255 255 / 48%);
+    padding: 11px;
+    border-radius: 42px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+#camFlipBtn:hover{
+    opacity: 1;
+}
+#imagePlaceholder{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    top: 50%;
+}

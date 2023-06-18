@@ -1,0 +1,4 @@
+STATION SETUP:
+
+#1) Pull up shelf donation page with: http://localhost:3001/?shelf=____
+#2) Pull up cover screen on cover panel with: localhost:3000?search=["Junk Vault Hermes","location"]&pageType=cover

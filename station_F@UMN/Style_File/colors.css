@@ -1,0 +1,41 @@
+#toolTitle,#goHome,#toolbox_label,#topbar,#createPathwayButton{
+background-color: #feff00;
+color: #000000;
+}
+#createPathwayButton:hover{
+background-color: #ffff90;
+}
+#cat1,#cat2,#cat3,#cat4,#AAPcat{
+background-color: #2aff93;
+color: #000000;
+}
+#cat1:hover,#cat2:hover,#cat3:hover,#cat4:hover,#AAPcat:hover{
+background-color: #ff36f1;
+}
+#cat1_end,#cat2_end,#cat3_end,#cat4_end,#AAPcat_end{
+background-color: #fff696;
+color: #000000;
+}
+#cat1_end:hover,#cat2_end:hover,#cat3_end:hover,#cat4_end:hover,#AAPcat_end:hover{
+background-color: #b3dfff;
+}#goHome:hover,.onPage{
+background-color: #ffff90;
+}    
+#menuContainer{border-left:#000000 1px solid;
+border-right:#000000 1px solid;
+}
+a:link,a:visited{
+color:#000000
+}
+#addHours_btn{
+ background-color: #feff00;
+color: #000000;
+}
+.styledBtn{
+background-color: #feff00;
+color: #000000;
+border-radius: 6px;
+}
+.styledBtn:hover{
+background-color: #ffff90;
+}

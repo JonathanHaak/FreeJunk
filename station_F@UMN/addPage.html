@@ -1,0 +1,229 @@
+<html allowusermedia allow="camera;microphone">
+    <head>
+        <title>|| Active Add Item in Person ||</title>
+        <link rel="icon" type="image/png" href="Style_File/AstraduxLogo.png">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+        <script>window.jQuery || document.write('<script src="path/to/your/jquery_file.js"><\/script>')</script>
+        
+        <link rel="icon" href="" type="image/x-icon">
+        <link href="./css/addPage.css" rel="stylesheet">
+        <script src="./deviceOptimization/deviceOptimizer.js"></script>
+        <script src="./js/globals.js"></script>
+        
+        <script src="./js/webcamLib.js"></script>
+        <link href="./css/cameraSnap_toURI.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="whiteWall" class="fadeoutForwards"></div>
+        
+        <div id="allBinsFullWrap">
+            <img id="" src="">
+            <div id="allFullMessage" style="display: none">This shelf is currenly full! Please give away your item somewhere else or check back later</div>
+        </div>
+
+        <div id="imageWrap">
+            <div id="donateAgainSplurb">Donate again, or leave idle and system will return to screensaver</div>
+            <div id="webcamWrap">
+                <img id="capturedImg" src="./automationFiles/choppingBoard/obj1.png">
+
+                <div id="obj_picInput" style="display: block" class="fadeoutForwardsWithDelay">
+                    <video id="webcam" autoplay="" playsinline="" width="2500px" height="2500px" style="transform: scale(-1, 1);" class="" ></video>
+                    <canvas id="canvas" class="d-none" style="display:none"></canvas>
+                    <audio id="snapSound" src="sounds/shutter.mp3" preload="auto"></audio>
+                    <a id="downloadLink" href="img.png" download="output.png"></a>
+                    <meta id="cameraStatus_meta" content="active">
+                </div>
+
+                <img id="imagePlaceholder" src="" onclick="imageInputClick()" style="display:none">
+            </div>
+            <div id="imgExWrap">
+                <span id="exText">Ex:</span>
+                <img id="exampleImg" src="./images/leftHandPalm.png">
+            </div>
+            <span id="pressSpacebarToTakePicSplurb">Press Spacebar to Take Picture</span>
+        </div>
+
+        <div id="criteriaCheckboxesWrap">   <!-- New Origional Criteria Checking Style -->
+
+            <div id="m1" class="criteriaLoadingWrap" style="display: none">
+                <div class="backdrop"></div>
+                <div class="message">Checking Criteria #1</div>
+                <div class="dot dot3Ani leftDot"></div>
+                <div class="dot dot2Ani leftDot"></div>
+                <div class="dot dot1Ani leftDot"></div>
+                <div class="dot dot1Ani"></div>
+                <div class="dot dot2Ani"></div>
+                <div class="dot dot3Ani"></div>
+                <div class="pulse pulse1Ani"></div>
+                <div class="pulse pulse2Ani"></div>
+                <div class="pulse pulse3Ani"></div>
+                <div class="dash dashLeft"></div>
+                <div class="dash dashRight"></div>
+            </div>
+
+            <div id="m2"  class="criteriaLoadingWrap" style="display: none">
+                <div class="backdrop"></div>
+                <div class="message">Checking Criteria #2</div>
+                <div class="dot dot3Ani leftDot"></div>
+                <div class="dot dot2Ani leftDot"></div>
+                <div class="dot dot1Ani leftDot"></div>
+                <div class="dot dot1Ani"></div>
+                <div class="dot dot2Ani"></div>
+                <div class="dot dot3Ani"></div>
+                <div class="pulse pulse1Ani"></div>
+                <div class="pulse pulse2Ani"></div>
+                <div class="pulse pulse3Ani"></div>
+                <div class="dash dashLeft"></div>
+                <div class="dash dashRight"></div>
+            </div>
+
+            <div id="m3"  class="criteriaLoadingWrap" style="display: none">
+                <div class="backdrop"></div>
+                <div class="message">Checking Criteria #3</div>
+                <div class="dot dot3Ani leftDot"></div>
+                <div class="dot dot2Ani leftDot"></div>
+                <div class="dot dot1Ani leftDot"></div>
+                <div class="dot dot1Ani"></div>
+                <div class="dot dot2Ani"></div>
+                <div class="dot dot3Ani"></div>
+                <div class="pulse pulse1Ani"></div>
+                <div class="pulse pulse2Ani"></div>
+                <div class="pulse pulse3Ani"></div>
+                <div class="dash dashLeft"></div>
+                <div class="dash dashRight"></div>
+            </div>
+
+
+            <div id="c1_pass" class="criteriaBox sideOutCriteriaBox c1" style="display: none">
+                <div id="c1_box" class="criteriaBoxBox">
+                    <div class="checkPlate circleFadeIn"></div>
+                    <div id="checkWrap" class="revealCircle">
+                        <div id="checkCircle" class="checkElement expand"></div>            
+                        <div id="checkSmallLine" class="checkElement growLine1"></div>
+                        <div id="checkBigLine" class="checkElement growLine2"></div>
+                        <div id="lineBelow" class="checkElement growLine4"></div>
+                        <div id="lineBelow2" class="checkElement growLine3"></div>
+                    </div>
+                </div>
+                <div id="c1_message_pass" class="criteriaMessage">
+                    <span class="bold_text criteriaText textFadeIn">Fits in Bins</span>
+                    <span class="subtext_text criteriaText subtextFadeIn"> -- this fit in webcam's field of view</span>
+                </div>
+            </div>
+
+            <div id="c1_fail" class="criteriaBox sideOutCriteriaBox c1 failBox" style="display: none">
+                <div id="c1_box" class="criteriaBoxBox">
+                    <div class="checkPlate circleFadeIn"></div>
+                    <div id="xWrap">
+                        <div id="xCircle" class="xElement expand"></div>            
+                        <div id="xLine1" class="xElement xGrowLine1"></div>
+                        <div id="xLine2" class="xElement xGrowLine2"></div>
+                        <div id="xline1Below" class="xElement xGrowLine4"></div>
+                        <div id="xline2Below" class="xElement xGrowLine3"></div>
+                    </div>
+                </div>
+                <div id="c1_message_fail" class="criteriaMessage">
+                    <span class="bold_text criteriaText textFadeIn">Doesn't fit in Bins</span>
+                    <span class="subtext_text criteriaText textFadeIn"> -- this does not fit in webcam's field of view</span>
+                </div>
+            </div>
+
+
+            <div id="c2_pass" class="criteriaBox sideOutCriteriaBox c2" style="display: none">
+                <div id="c2_box" class="criteriaBoxBox">
+                    <div class="checkPlate circleFadeIn"></div>
+                    <div id="checkWrap" class="revealCircle">
+                        <div id="checkCircle" class="checkElement expand"></div>            
+                        <div id="checkSmallLine" class="checkElement growLine1"></div>
+                        <div id="checkBigLine" class="checkElement growLine2"></div>
+                        <div id="lineBelow" class="checkElement growLine4"></div>
+                        <div id="lineBelow2" class="checkElement growLine3"></div>
+                    </div>
+                    <!--    place checkbox element or x element in here -->
+                </div>
+                <div id="c2_message_pass" class="criteriaMessage">
+                    <span class="bold_text criteriaText textFadeIn">Valuable</span>
+                    <span class="subtext_text criteriaText textFadeIn"> -- this is sold online</span>
+                </div>
+            </div>
+
+            <div id="c2_fail" class="criteriaBox sideOutCriteriaBox c2 failBox" style="display: none">
+                <div id="c2_box" class="criteriaBoxBox">
+                    <div class="checkPlate circleFadeIn"></div>
+                    <div id="xWrap">
+                        <div id="xCircle" class="xElement expand"></div>            
+                        <div id="xLine1" class="xElement xGrowLine1"></div>
+                        <div id="xLine2" class="xElement xGrowLine2"></div>
+                        <div id="xline1Below" class="xElement xGrowLine4"></div>
+                        <div id="xline2Below" class="xElement xGrowLine3"></div>
+                    </div>
+                    <!--    place checkbox element or x element in here -->
+                </div>
+                <div id="c2_message_fail" class="criteriaMessage">
+                    <span class="bold_text criteriaText textFadeIn">Not Valuable</span>
+                    <span class="subtext_text criteriaText textFadeIn"> -- this is not sold online</span>
+                </div>
+            </div>
+
+            <div id="c3_pass" class="criteriaBox sideOutCriteriaBox c3" style="display: none">
+                <div id="c3_box" class="criteriaBoxBox">
+                    <div class="checkPlate circleFadeIn"></div>
+                    <div id="checkWrap" class="revealCircle">
+                        <div id="checkCircle" class="checkElement expand"></div>            
+                        <div id="checkSmallLine" class="checkElement growLine1"></div>
+                        <div id="checkBigLine" class="checkElement growLine2"></div>
+                        <div id="lineBelow" class="checkElement growLine4"></div>
+                        <div id="lineBelow2" class="checkElement growLine3"></div>
+                    </div>
+                    <!--    place checkbox element or x element in here -->
+                </div>
+                <div id="c3_message_pass" class="criteriaMessage">
+                    <span class="bold_text criteriaText textFadeIn">Not Obscure</span>
+                    <span class="subtext_text criteriaText textFadeIn"> -- this is sold on common webstores</span>
+                </div>
+            </div>
+
+            <div id="c3_fail" class="criteriaBox sideOutCriteriaBox c3 failBox" style="display: none">
+                <div id="c3_box" class="criteriaBoxBox">
+                    <div class="checkPlate circleFadeIn"></div>
+                    <div id="xWrap">
+                        <div id="xCircle" class="xElement expand"></div>            
+                        <div id="xLine1" class="xElement xGrowLine1"></div>
+                        <div id="xLine2" class="xElement xGrowLine2"></div>
+                        <div id="xline1Below" class="xElement xGrowLine4"></div>
+                        <div id="xline2Below" class="xElement xGrowLine3"></div>
+                    </div>
+                    <!--    place checkbox element or x element in here -->
+                </div>
+                <div id="c3_message_fail" class="criteriaMessage">
+                    <span class="bold_text criteriaText textFadeIn">Too Obscure</span>
+                    <span class="subtext_text criteriaText textFadeIn"> -- this is not sold on common webstores</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="placementWrap">
+            <div id="placeSplurb" class="placementPassEl">Thank you! Please put item in this bin: </div>
+            <img id="binImage" class="placementPassEl" src="./images/binOutline.png">
+            <div class="placementBtn placementPassEl" id="enterWhenDoneBtn">Press Spacebar When Done!</div>
+            <div class="placementBtn placementPassEl" id="spacebarIfTooFullBtn">Press Enter if that Bin is Too Full</div>
+
+            <div id="rejectionSplurb" class="placementFailEl">This Object didn't meet all donation criteria</div>
+            <div class="placementBtn placementFailEl" id="spacebarToTryAgain">Press Spacebar to Try Donating Again</div>
+        </div>
+        
+        <div id="countdownWrap">
+            <div id="countdownText">Returning to screensaver in <div id="countdownVal">5</div>...</div>
+        </div>
+
+        <form action="/" method="post" style="display: none" id="hiddenForm">
+            <input type="text" name="command" value="" id="command_hiddenInput">
+            <input type="text" name="data" value="" id="data_hiddenInput">
+            <input type="text" name="uri" value="" id="uri_hiddenInput">
+            <input type="text" name="timestamp" value="" id="captureTimestamp_hiddenInput">
+        </form>
+        <script src="./js/addPage.js"></script>
+        <script src="./js/cameraSnap_toURI.js"></script>
+    </body>
+</html>

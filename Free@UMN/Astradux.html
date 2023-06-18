@@ -1,0 +1,220 @@
+<html>
+    <head>
+        <title>Free @ UMN</title>
+        <!--Omg hiii! Welcome to the source code!-->
+        <script type="text/javascript" src="js/globals.js"></script>
+        <link href="Astradux.css" rel="stylesheet">
+        <link href="animations.css" rel="stylesheet">
+        <link rel="icon" type="image/png" href="Style_File/AstraduxLogo.png">
+        <meta name="InventoryDATA" content="~INVENTORY~">
+        <script type="text/javascript" src="js/jQuery.js"></script>
+        <script type="text/javascript" src="js/partViewFunctionality.js"></script>
+        <script type="text/javascript" src="js/pluralize.js"></script>
+        <script type="text/javascript" src="js/partModification.js"></script>
+        <script type="text/javascript" src="js/toolFunctionality.js"></script>
+        <script type="text/javascript" src="js/pageNavigation.js"></script>
+        <script type="text/javascript" src="js/cookieFuncs.js"></script>
+        <script type="text/javascript" src="js/fetch.js"></script>
+        <script type="text/javascript" src="js/userFunctions.js"></script>
+        <script type="text/javascript" src="Style_File/colors.js"></script>
+        <link href="Style_File/colors.css" rel="stylesheet">
+        <meta name="backCall" content="">
+        <meta name="backData" content="">
+    </head>
+    <body id="body">
+        <div id="topbar">
+            <a href=Astradux.html><img src="Style_File/AstraduxSignage.png" id="A"></a>
+            <div id="menuContainerContainer">
+                <div id="menuContainer"><a href="catagoryMap.html">Categories</a></div>
+            </div>
+            <div id="search"><label id="searchLabel">Search: </label><input placeholder="Ex: pop-socket" autocomplete="off" id="inquiry" size="10">
+            </div>
+        </div>
+        <div id="blurBar"></div>
+        <div id="widener"></div>
+
+        <br>
+        <br>
+        <br>
+
+        <div id="tilesHolder"><div id="locationLine"></div></div>
+
+        <div id="searchForMoreLesson"></div>
+
+        <script type="text/javascript" src="js/main.js"></script>
+
+        <div id="marker"></div>
+        <div id="noResultsBanner" class="inpageMessages">Your Search had no Results</div>
+        <div id="emailMe_wrapper">
+            <span id="mailMessageSpan">Email me at <input id="email" placeholder="jbond007@umn.edu"> when a new free <span id="textMod1"></span><input id="mailInput" placeholder="penguin tux"><span id="textMod2"></span> is available</span>
+            <button id="mailMeButton"><img id="mailIcon" src="Images/mailIcon.svg"><span id="mailSubmitSub">Submit</span></button>
+        </div>
+        <div id="spaceToGoHomeMessage" class="inpageMessages">Press space to return to the Homescreen</div>
+
+        <div id="curtian" onclick=exit_any()></div>
+        <div id="partView_SUPERWRAP">
+            <img src="Images/leftPointer.png" id="leftPointer" class="pointer">
+            <div id="viewPart">
+                <div id="partViewBackground"></div>
+                <meta id="isActive_meta" name="isActive" content="no">
+                <meta id="homeBlocker_meta" name="homeBlocker" content="off">
+                <meta id="zoomActive_meta" name="zoomActive" content="no">
+                <div id="col1">
+                    <div class="adminContent">
+                        <div id="editPartDataButton" onclick="initiate_partModSetUp()">Edit Part Data</div>
+                        <div id="PV_tileWrap">
+                            <div id="fooTile"></div>
+                            <div id="fooTile_overlay"></div>
+                        </div>
+                        <div id="controlWrap">    
+                            <div id="controlPanel">
+                                <div id="minus1" onclick="minus1()"><div id="minus1_inside">-</div></div>
+                                <div id="hiddenMinusBlocker"></div>
+                                <div id="add1" onclick="add1()"><div id="plus1_inside">+</div></div>
+                            </div>
+                        </div>
+                        <div id="delete" onclick="deleteEntry(); exit_any();"><img id="numControl_img" src="Images/TrashBin.png"></div>
+                    </div>
+                    <div class="userContent">
+                        <button id="claimBtn">Take This</button>
+                    </div>
+                </div>
+                <div id="scrollBox"></div>
+                <div id="col2">
+                    <b><div id="partView_partName"></div></b>
+                    <img id="retrievedImg" src="Images/subtleLoading.gif"><img id="outofstockOverlayImg" src="Images/OutOfStockBlur.png" class="PV_imgOverlay"><div id="blockZoomOverlay" class="PV_imgOverlay"></div>
+                    <div id="partView_quantity"></div>
+                    <div id="partView_location"></div>
+                    <div class="mobileWrap"><div id="partView_tags"></div></div>
+                    <div class="mobileWrap"><div id="partView_catagoy"></div></div>
+                    <div id="locationAnimationWrap"><img id="canvasBackground" width="300" height="200" src="Images/LocationAniLoadingGIF.gif"><canvas id="animationCanvas" height="200" width="300"></canvas><div id="locAnimation_LocLine">~Location Here~</div></div>
+                </div>
+                <div id="col3">
+                    <div id="description_header"><strong>Description</strong></div>
+                    <div id="description_text">description text</div>
+
+                </div>
+            </div>
+            <img src="Images/rightPointer.png" id="rightPointer" class="pointer">
+        </div>
+        <div id="locWalk_wrap">
+            <span id="introductionMessage">This Item Awaits Reuse Here:</span>
+            <div id="locWalk_colWrap">
+                <div id="locWalk_col1" class="walkColumn">
+                    <div id="locationWalkImageWrapper">
+                        <div id="mapWrapper">
+                            <span id="startWalkMessage">Start Here...</span>
+                            <img id="map" src="./LocationMap_Images/BlueShelfCords.png">
+                            <div id="mapOverlay" onclick="window.open('https://www.google.com/maps/place/44%C2%B058\'29.6%22N+93%C2%B013\'59.4%22W/@44.9748819,-93.2337262,19z/data=!3m1!4b1!4m4!3m3!8m2!3d44.974881!4d-93.233179')">Click to Open in Google Maps</div>
+                        </div>
+                        <img class="walkThroughArrow" src="./Images/colon.png">
+                        <span id="pathWalkMessage">... and Follow This Path to:</span>
+                        <img class="walkThroughScrollImg" src="./LocationMap_Images/walk1.jpg">
+                        <img class="walkThroughArrow" src="./Images/forwardIcon.png">
+                        <img class="walkThroughScrollImg" src="./LocationMap_Images/walk2.jpg">
+                        <img class="walkThroughArrow" src="./Images/forwardIcon.png">
+                        <img class="walkThroughScrollImg" src="./LocationMap_Images/walk3.jpg">
+                        <img class="walkThroughArrow" src="./Images/forwardIcon.png">
+                        <img class="walkThroughScrollImg" src="./LocationMap_Images/walk4.jpg">   
+                        <img class="walkThroughArrow" src="./Images/forwardIcon.png">
+                        <img class="walkThroughScrollImg" src="./LocationMap_Images/walk5.jpg">
+                        <img class="walkThroughArrow" src="./Images/forwardIcon.png">
+                        <img class="walkThroughScrollImg" src="./LocationMap_Images/walk6.jpg">
+                        <img id="spacerImg" src="./Images/HD_transparent_picture.png">
+                    </div>
+                    <div id="fadeRec"></div>
+                </div>
+                <div id="locWalk_col2" class="walkColumn">
+                    <img src="./LocationMap_Images/walkBlueShelf.jpg" class="walkImg">
+                    <span id="shelfSpan">Blue Shelf </span>
+                    <span id="shelfSubSpan">in the Anderson Build Lab</span>
+                </div>
+                <div id="locWalk_col3" class="walkColumn">
+                    <img src="./LocationMap_Images/walkFinalBin.jpg" class="walkImg">
+                    <button id="locationVideoBtn">Hmmm, where? Show me how to get there from Coffman</button>
+                </div>
+                <div id="locWalk_col4" class="walkColumn">
+                    <div id="locWalk_col4_row">
+                        <img src="./Images/walkArrow.png" id="walk_arrowImg">
+                        <span id="locWalk_arrowSpan">In This Bin</span>
+                    </div>
+                </div>
+            </div>
+            <button id="locationDoneButton">Done</button>
+        </div>
+
+        <div id="curtian2" class="claimStageElement"></div>
+        <div id="curtian3"></div>
+        <div id="itemClaim_SUPERWRAP">
+            <div id="itemClaim" class="claimStageElement">
+                <div id="itemClaimedBanner">Take This!</div>
+                <div id="claimed_fooTileWrapper"></div>
+                <div id="claimed_btnBar">
+                    <button id="takeBtn" class="claimBtn">'Okay I took it!'</button>
+                    <button id="nevermindBtn" class="claimBtn">'Nevermind!'</button>
+                </div>
+            </div>
+        </div>
+
+
+        <button id="hiddenBtn"></button><!--this button is selected when part view is turned on to prevent the page from scrolling down on spacebar press-->
+        <div id="zoomImgCurtain" class="subCurtian"></div>
+        <div id="locationAniCurtain" class="subCurtian"></div>
+        <img id="zoomImg">
+        <button id="enhanceBtn" onclick="alert('Sorry, this feature is not yet online!')">Enhance</button>
+        <div id="toolbox">
+            <div id="toolbox_label">Tool Box</div>
+            <button onclick="showTransfereBox()" class="toolBtn">Transfere a Location</button>
+            <button onclick="loadUpLastInventoryFile()" class="toolBtn">Load-up Last File</button>
+            <button onclick="toggleUserMode_tool()" class="toolBtn">Toggle User Mode</button>
+        </div>
+
+        <div id="toolControlPanel">
+            <meta id="isToolActive_meta" name="isToolActive" content="no">
+            <div id="toolTitle">Transfere Tool</div>
+            <div id="toolControls_transfereLocations">
+                <div id="transBox_Text">
+                    <div id="transBox_Text">move everything at location </div>
+                    <input id="transBox_loc1">
+                    <div id="transBox_Text"> to </div>
+                    <input id="transBox_loc2">
+                </div>
+                <button id="submitLocTransfereButton">Transfere</button>
+                <div id="locationMultitool_Homepage"><img id="canvasBackground_transLoc_deactivated" src="" width="300" height="200"><canvas id="locationCanvas_transLoc_deactivated" height="200" width="300"></canvas><div id="drawingMarkersMessage">Drawing Markers...</div><div id="locMapHome" onclick="goHome()"><img src="Images/homeicon.svg" height="25" style="padding: 2px"></div><div id="locMapBack" onclick="goBack()"><img src="Images/backicon.png" height="25" style="padding: 2px"></div><div id="locMapEdit"><img id="locMapEditImg" src="Images/pencilIcon.png" height="20px"></div></div>
+                <input id="file-input_forNewLoc" style="display:none">
+                <input type="text" id="location" style="display:none">
+                <div id="redArrowWrap"><img src="Images/redArrow.svg" id="redArrowImg"></div><div id="locInexistentMessage">It looks like the location you entered doesn't exist in the locations array. Please add this new location to the map</div>
+            </div>
+        </div>
+
+
+        <div id="keyboardShortcutsWrapper" onclick="collapseKS()">
+            <div id="keyboardShortcutsTab">Keyboard Shortcuts</div>
+            <div id="keyboardShortcuts">
+                <div id="keyboardShortcutsList">>a to addAPart<br>>c to categoryMap<br>>Arrow-keys to scroll</div>
+            </div>
+        </div>
+
+        <div id="scopeButton">Scopes</div>
+
+        <div id="confirmationBlock"><img src="Images/checkmark.png" height="40px" id="CB_img"><div id="CB_text"></div></div>
+
+        <div id="invisableSpacer"></div>
+        <button id="loadPartsButton">Show Me More Free Stuff!</button>
+        <div id="loadingInventoryFileMessage" class="inpageMessages">Loading next Inventory File...</div>
+        <div id="allInventoryLoadedMessage" class="inpageMessages">You've reached the end of the Inventory! All part data in the Inventory_Files has been loaded</div>
+
+        <script type="text/javascript" src="js/locationAnimations.js"></script>
+
+        <form action="/Astradux.html" method="post" style="display: none" id="hiddenForm" enctype="multipart/form-data">
+            <input type="text" name="command" value="" id="command_hiddenInput">
+            <input type="text" name="data" value="" id="data_hiddenInput">
+            <input type="text" name="fileN" value="" id="fileN_hiddenInput">
+        </form>
+        <script type="text/javascript" src="deviceOptimization/deviceOptimizer.js"></script>
+        <img src="Images/subtleLoading.gif" style="visibility: hidden;height: 1px;" id="loadingImg">
+
+    </body>
+</html>
+
+<!--Feb 2020 - ____-->

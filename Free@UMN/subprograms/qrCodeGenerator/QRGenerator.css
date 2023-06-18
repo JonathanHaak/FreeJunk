@@ -1,0 +1,86 @@
+@font-face { font-family: yellowTail; src: url('./fonts/Yellowtail-Regular.ttf'); }
+@font-face { font-family: LilitaOne; src: url('./fonts/LilitaOne-Regular.ttf'); }
+
+td {
+    border: 1px solid #cccccc;
+    height: 240px;
+    width: 240px;
+    text-align: center;
+    font-size: 28px;
+    line-height: 1.5em;
+    /* height is 2x line-height, so two lines will display */
+    overflow: hidden;  
+    -webkit-print-color-adjust: exact;
+    background: white;
+    border-radius: 5px;
+}
+table{
+    border: 1px solid #cccccc;
+    margin-right: auto;
+    margin-left: auto;
+    -webkit-print-color-adjust: exact;
+    margin-bottom: 50px;
+}
+img{
+    width: 95%;
+    z-index: 0;
+    position: relative;
+    margin-top: 3px;
+    /*width: 300px; 
+    height: 337px;*/
+    object-fit: none;
+    object-position: right 53% bottom 48%;
+    border-radius: 3px;
+    /* border: 1px solid black; */
+}
+#ctrlWrapper{
+    display: none;
+}
+@media not print {
+    body{
+        background-color: lightgreen !important;
+    }
+    button{
+        background-color: lightgreen !important;
+    }
+    table{
+        zoom:  0.1;
+    }
+    #ctrlWrapper{
+        display: block !important;
+    }
+}
+button{
+    cursor: pointer;
+}
+.freeLabel{
+    -webkit-print-color-adjust: exact;
+    color: black;
+        font-size: 19px;
+    margin-bottom: -4px;
+    line-height: 20px;
+    position: relative;
+    z-index: 9;
+    font-family: yellowTail;
+    text-shadow: 1px 1px 2px white, 0 0 1em white, 0 0 0.2em white;
+    background: yellow;
+}
+.labelText{
+    -webkit-print-color-adjust: exact;
+    border-radius: 40px;
+    width: 90%;
+    /*text-shadow: 0px 0px 0px black, 0 0 0.1em black, 0 0 0.2em black;*/
+    color: white;
+    //font-weight: bolder;
+    margin-left: 5%;
+    font-family: LilitaOne;
+    font-size: 75px;
+    z-index: 9;
+    position: relative;
+    transform: translate(0px,-5px);
+    margin-top: 18px;
+}
+.qrCodeBacksplash{
+    height: 100%;
+    width: 100%;
+}
