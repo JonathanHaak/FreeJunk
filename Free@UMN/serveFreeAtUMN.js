@@ -26,6 +26,8 @@ var CATAGORIES = null;
 var LOCATIONS = null;
 var mailList = null;
 
+var objectNum = 0;
+
 function c(str){
     console.log(str);
 }
@@ -431,6 +433,9 @@ function configureStandby(){
     app.get("/donate", function(req, res){
         res.sendFile(path.join(__dirname,"..","station_F@UMN","addPage.html"));
     });
+    app.get("/getObjectNum", function(req, res){
+        res.json({objNumber: objectNum});
+    });
     app.post("/donate", function(req, res){
         console.log("Incomming Post from /donate, command: "+req.body.command);
         
@@ -451,7 +456,7 @@ function configureStandby(){
         res.sendFile(path.join(__dirname,"..","station_F@UMN","fullWalkthrough.html"));
     });
     app.get("/criteriaCheck", function(req, res){
-        var messageData = req.data;
+        var messageData = {};
         messageData.url= url.parse(req.url,true).query;
         messageData.postNum = donatePostTicker;
         stationChild.send(messageData);
