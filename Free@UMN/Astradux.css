@@ -353,7 +353,7 @@ button{
     color: white;
 }
 #partView_location{
-        font-size: 2.5vw;
+        font-size: min(34px, 2.5vw);
         width: 57%;
         margin-top: 55px;
         border-radius: 30px;

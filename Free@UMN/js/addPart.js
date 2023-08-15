@@ -18,9 +18,20 @@ var lastDataAdded = [];
 var catBlocksToDarken = [];
 var catBlocksToDarken_arr = [];
 
+var URLPartDataDecoded = null;
 window.onload = function(){
     fetch_CATAGORIES(addPartStartup);
     $.post("/addPart.html", {command: "VAHCS_sniff", data: getCookie("userToken")});
+
+    if(window.location.href.indexOf("partData") != -1){
+        c("Part data detected in URL!");
+        c("Retrieveing...");
+        var URLPartDataRaw = window.location.href.substring(window.location.href.indexOf("partData")+9);
+        c("URLPartDataRaw: "+URLPartDataRaw);
+        URLPartDataDecoded = JSON.parse(decodeURI(URLPartDataRaw));
+        c("URLPartDataDecoded: "+URLPartDataDecoded);
+
+    }
 }
 function addPartStartup(){
     document.body.style.cursor = "default";
@@ -129,14 +140,34 @@ function resetPartInput(){
 }
 
 function addtoInventory(){
-    var partInfo = "";
-    var partName = fixQuoteMarks(document.getElementById("name").value);
-    var partLocation = document.getElementById("location").value.replace(/>/g, "").replace(/</g, "");
-    var partTags = fixQuoteMarks(document.getElementById("tags").value);
-    var partQuantity = document.getElementById("quantity").value;
-    var partCatagory = document.getElementById("catagory").value;
-    var description = fixQuoteMarks(document.getElementById("description").value);
-    var isBin = document.getElementById("isBin").checked.toString();
+    var partInfo = null;
+    var partName = null;
+    var partLocation = null;
+    var partTags = null;
+    var partQuantity = null;
+    var partCatagory = null;
+    var description = null;
+    var isBin = null;
+    if(URLPartDataDecoded == null){
+        partInfo = "";
+        partName = fixQuoteMarks(document.getElementById("name").value);
+        partLocation = document.getElementById("location").value.replace(/>/g, "").replace(/</g, "");
+        partTags = fixQuoteMarks(document.getElementById("tags").value);
+        partQuantity = document.getElementById("quantity").value;
+        partCatagory = document.getElementById("catagory").value;
+        description = fixQuoteMarks(document.getElementById("description").value);
+        isBin = document.getElementById("isBin").checked.toString();
+    }else{
+        partInfo ="";
+        partName =URLPartDataDecoded.name;
+        partLocation =URLPartDataDecoded.location;
+        partTags =URLPartDataDecoded.tags;
+        partQuantity = 1;
+        partCatagory = URLPartDataDecoded.catagory;
+        description =URLPartDataDecoded.description;
+        isBin =false;
+        findAndAddCatagory(URLPartDataDecoded.catagory);
+    }
 
     //if(URIActive){
     picURL = timestamp_picName;
@@ -500,7 +531,7 @@ function submitPartMod(){
     var partTags = document.getElementById("tags").value;
     var partQuantity = document.getElementById("quantity").value;
     var partCatagory = document.getElementById("catagory").value;
-    var description = document.getElementById("description").value;
+    var description = document.getElementById("description").value.join(" ");
     var isBin = document.getElementById("isBin").checked.toString();
 
     var dataToMod = eval(JSON.parse(getCookie("MODDATA")).data) /*document.querySelector("meta[name=ModDATA]").getAttribute("content")*/[0][0];
@@ -842,7 +873,7 @@ function executeAddCat(){
     $.post("/addPart.html", {command: "addCat", data: JSON.stringify(catagories)});
 
     breakAllLoopLayers = false;
-    
+
     /*document.getElementById("command_hiddenInput").value = "addCat";
     document.getElementById("data_hiddenInput").value = JSON.stringify(catagories);
     document.getElementById("hiddenForm").submit();*/
