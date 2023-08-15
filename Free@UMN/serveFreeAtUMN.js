@@ -1,3 +1,4 @@
+//New!
 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n~~serveFreeJunk.js initiated...~~\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
 //#######     --Import Node Modules--     #######                 #######                 #######                 #######                 #######
@@ -26,6 +27,8 @@ var CATAGORIES = null;
 var LOCATIONS = null;
 var mailList = null;
 
+var objectNum = 0;
+
 function c(str){
     console.log(str);
 }
@@ -33,6 +36,7 @@ function c(str){
 //#######     --Setup Express Port--     #######                 #######                 #######                 #######                 #######
 app.use(express.static(path.join(__dirname, ".")));
 app.use('/donate', express.static(path.join(__dirname, "..", "station_F@UMN")));
+app.use('/walkthrough', express.static(path.join(__dirname, "..", "station_F@UMN")));
 app.use(bodyParser.json({limit: '200mb'}));
 app.use(bodyParser.urlencoded({limit: '200mb', extended: true}));
 
@@ -365,7 +369,7 @@ function configureStandby(){
             }
         });
     });
-    
+
     app.get("/generateBoxQRs", function(req, res){
         var queryObject = url.parse(req.url,true).query;
         console.log(">>>Generate Box QRs Fetch Request: query object: "+JSON.stringify(queryObject)+" <<->> x: "+queryObject.x+" <<->> y: "+queryObject.y+" <<->> color: "+queryObject.color);
@@ -427,42 +431,52 @@ function configureStandby(){
             res.json({result: "done!"});
         });
     });
-        
+
     app.get("/donate", function(req, res){
         res.sendFile(path.join(__dirname,"..","station_F@UMN","addPage.html"));
     });
+    app.get("/getObjectNum", function(req, res){
+        res.json({objNumber: objectNum});
+    });
+    app.get("/incrementObjectNum", function(req, res){
+        objectNum++;
+        c("New Object Number in serveFreeAtUMN.js: "+objectNum);
+        stationChild.send({command: "incrementObjectNum",newObjectNum:objectNum});
+        res.json({objNumber: objectNum});
+    });
     app.post("/donate", function(req, res){
         console.log("Incomming Post from /donate, command: "+req.body.command);
-        
+
         var messageData = req.body;
         messageData.subcommand = req.body.command;
         messageData.command = ">>donatePost";
         messageData.postNum = donatePostTicker;
-        
+
         stationChild.send(messageData);
-        
+
         resolvePostEvent.on("resolveDonatePost"+donatePostTicker, ()=>{
             res.status(204).send();
         });
         donatePostTicker++;
-        
+
     });
     app.get("/walkthrough", function(req, res){
         res.sendFile(path.join(__dirname,"..","station_F@UMN","fullWalkthrough.html"));
     });
     app.get("/criteriaCheck", function(req, res){
-        var messageData = req.data;
+        var messageData = {};
         messageData.url= url.parse(req.url,true).query;
         messageData.postNum = donatePostTicker;
+        messageData.command = "criteriaCheck";
         stationChild.send(messageData);
-        
-        resolvePostEvent.on("resolveCriteriaCheck"+donatePostTicker, (data)=>{
-            res.send({"passVal": data.criteriaResults["obj"+data.localObjectNum+"_c"+data.localCriteriaNum]}); 
+
+        resolvePostEvent.on("resolveCriteriaCheck"+donatePostTicker, ()=>{
+            res.send({"passVal": criteriaResults["obj"+localObjectNum+"_c"+localCriteriaNum]}); 
         });
         donatePostTicker++;
-        
+
     });
-    
+
     app.get("*", function(req, res){
         if(regenerationInProgress){
             res.send("!Please stand by, astrasystem file structure regenerating...");
@@ -642,20 +656,31 @@ function configureRequests(){
             console.log("Saving locations array from stationChild...");
             updateLocArray(data.data,()=>{});
         }else if(data.command == "resolveCriteriaCheck"){
-            console.log("Command to resolve criteria check Num: "+data.postNum+" from the backend...");
+            console.log("Command to resolve criteria check Num: "+data.postNum+" from stationServer.js heard by serveFreeAtUMN.js...");
+
+            criteriaResults = data.criteriaResults;
+            localObjectNum = data.localObjectNum;
+            localCriteriaNum = data.localCriteriaNum;
+
             resolvePostEvent.emit("resolveCriteriaCheck"+data.postNum);
-            
-            
+
         }else if(data.command == "resolveDataPost"){
-            console.log("Command to resolve post Num: "+data.postNum+" from the backend...");
+            console.log("Command to resolve post Num: "+data.postNum+" from stationServer.js heard by serveFreeAtUMN.js...");
             resolvePostEvent.emit("resolveDataPost"+data.postNum);
+        }else if(data.command == "incrementobjectNum"){
+            console.log("Command to increment objectNum from stationServer.js heard by serveFreeAtUMN.js...");
+            objectNum = data.objNum;
         }else{
             console.log("stationChild sent serveFreeAtUMN Server a command it did not recognize");
         }
     });
-    
+
 }
 var stationChild = null;
+
+var criteriaResults = null;
+var localObjectNum = null;
+var localCriteriaNum = null;
 
 //#######     --Action Definitions--     #######                 #######                 #######                 #######                 #######
 const getAllDirFiles = function(dirPath, arrayOfFiles){     //This is used to look inside folders at the actual files & file names
@@ -828,7 +853,7 @@ function update_FILECOUNTjs(){
     astrasystem.collection("Free_Stuff_Files").find().toArray((error, dataFiles)=>{
         n = dataFiles.length;
         console.log("v/ File count updated");
-        
+
         regenerateInvFiles();
     });
 }
@@ -1022,7 +1047,7 @@ function generateQRsWrap(x,y,c,r){
         imageDataURI.outputFile(code, filePath).then((res)=>{
             console.log(res);
             resultImageArray.push(filePath);
-
+qw
             console.log("Within generate QRs wrap, calling generateNewLocationQRs recursive driver...");
             generateNewLocationQRs(x,y,c,r);
         }); 
@@ -1061,18 +1086,22 @@ function generateNewLocationQRs(x,y,c,r){
     }
 }
 
-const options = {
-    key: fs.readFileSync('./www.freeumn.com.key'),
-    cert: fs.readFileSync('./cert.pem')
-}
+//console.log("ENVIORMENT env varible in Linux system detected: "+ process.env.ENVIORNMENT);
+//if(/*process.env.ENVIORNMENT == "dev"*/ true){
+//    app.listen(PORT,()=>{
+//        console.log("Hey! App started on port "+PORT+"!");
+//        /*|>Start::*/  configureStandby();
+//    });
+//}else{
+    const options = {
+        key: fs.readFileSync('./www.freeumn.com.key'),
+        cert: fs.readFileSync('./cert.pem')
+    }
 
-https.createServer(options, app)
-    .listen(443, function (req, res) {
-    console.log("Server started at port 443");
-   
-    console.log("Server started on port 3000! Working Directory:"+path.join(__dirname, ".")+"\n");
-    /*|>Start::*/  configureStandby();
-});
-
+    https.createServer(options, app).listen(443, function (req, res) {
+        console.log("Server started on port "+PORT+"! Working Directory:"+path.join(__dirname, ".")+"\n");
+        /*|>Start::*/  configureStandby();
+    });
+//}
 
 console.log("Server Online");

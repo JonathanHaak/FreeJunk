@@ -14,15 +14,20 @@ body{background: black}
 }
 #leftBlackBlocker{height: 100%;width: 60px;left: 0px;top: 0px;}#rightBlackBlocker{right: 0px;height: 100%;width: 50%;top: 0px;}#topBlackBlocker{top: 0px;right: 0px;width: 100%;height: 10%;}#bottomBlackBlocker{bottom: 0px;left: 0px;/* height: 50px; */width: 100%;}.blackBlocker{background: black;position: fixed;}
 
-#imageTile1,#imageTile1_old{bottom: 60px;right: 590px;}
-#imageTile2,#imageTile2_old{bottom: 335px;right: 590px;}
-#imageTile3,#imageTile3_old{bottom: 60px;right: 315px;}
-#imageTile4,#imageTile4_old{right: 315px;bottom: 335px;}
-#imageTile5,#imageTile5_old{right: 315px;bottom: 610px;}
-#imageTile6,#imageTile6_old{right: 40px;bottom: 335px;}
-#imageTile7,#imageTile7_old{right: 40px;bottom: 609px;}
-.imageTile{background: white;width: 270px;height: 270px;position: fixed;transform: rotate(-90deg);}
-.tileImg{width: 100%;height: 100%}
+:root {
+    --offsetBottom: 14px;
+    --offsetRight: 17px;
+    --tileSize: 278px;
+  }
+  #imageTile1,#imageTile1_old { bottom: calc(var(--offsetBottom) + (2 * var(--tileSize))); right: calc(var(--offsetRight)); }
+  #imageTile2,#imageTile2_old { bottom: calc(var(--offsetBottom) + var(--tileSize)); right: calc(var(--offsetRight)); }
+  #imageTile3,#imageTile3_old { bottom: calc(var(--offsetBottom) + var(--tileSize)); right: calc(var(--offsetRight) + var(--tileSize)); }
+  #imageTile4,#imageTile4_old { bottom: calc(var(--offsetBottom)); right: calc(var(--offsetRight) + var(--tileSize)); }
+  #imageTile5,#imageTile5_old { bottom: calc(var(--offsetBottom)); right: calc(var(--offsetRight) + (2 * var(--tileSize))); }
+  #imageTile6,#imageTile6_old { bottom: calc(var(--offsetBottom) + var(--tileSize)); right: calc(var(--offsetRight) + (2 * var(--tileSize))); }
+  #imageTile7,#imageTile7_old { bottom: calc(var(--offsetBottom) + (2 * var(--tileSize))); right: calc(var(--offsetRight) + var(--tileSize)); }
+  .imageTile { background: white; width: var(--tileSize); height: var(--tileSize); position: fixed; transform: rotate(-90deg); }
+  .tileImg { width: 100%; height: 100% }
 #img1{}
 #img2{}
 #img3{}

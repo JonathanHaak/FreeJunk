@@ -80,7 +80,7 @@ process.on("message",(data)=>{
 
             console.log("saveDonationImg process complete, telling parent to resolve the post  -- this post had #: "+data.postNum);
             process.send({command: "resolveDataPost", postNum: data.postNum});
-        }else if(data.command == "beginDontaion"){
+        }else if(data.subcommand == "beginDontaion"){
             c("Beginning donation: creating new object data file and identifying with lens.js...");
             fs.writeFile(path.join(__dirname,"automationFiles","choppingBoard",("obj"+objectNum+"Data.json")),'{"img":"'+data.imgPath+'", "location":"'+data.bin+'"}', (err)=>{
                 if(err){
@@ -93,7 +93,7 @@ process.on("message",(data)=>{
 
             console.log("beginDontaion process complete, telling parent to resolve the post  -- this post had #: "+data.postNum);
             process.send({command: "resolveDataPost", postNum: data.postNum});
-        }else if(data.command == "namify"){
+        }else if(data.subcommand == "namify"){
             c("Namifying object: "+data.objNum);
 
             var nameAFChild = cp.fork(path.dirname(__dirname)+"/station_F@UMN/automationFiles/name.js", [data.objNum, "deployment"]);
@@ -105,19 +105,19 @@ process.on("message",(data)=>{
             console.log("namify process complete, telling parent to resolve the post  -- this post had #: "+data.postNum);
             process.send({command: "resolveDataPost", postNum: data.postNum});
 
-        }else if(data.command == "catagorizeAndLogObject"){
+        }else if(data.subcommand == "catagorizeAndLogObject"){
             c("Logging object: "+data.objNum);
 
             donationAutomation();
 
             console.log("catagorizeAndLogObject process complete, telling parent to resolve the post  -- this post had #: "+data.postNum);
             process.send({command: "resolveDataPost", postNum: data.postNum});
-        }else if(data.command == "deleteObjectData"){
+        }else if(data.subcommand == "deleteObjectData"){
             c("Object: "+data.objNum + " failed to meet all donation criteria, running detetion on its data...");
 
             console.log("deleteObjectData process complete, telling parent to resolve the post  -- this post had #: "+data.postNum);
             process.send({command: "resolveDataPost", postNum: data.postNum});
-        }else if(data.command == "updateLocationsArray"){
+        }else if(data.subcommand == "updateLocationsArray"){
             c("Recieved command to save new locations array: "+data.data);
             //process.send({command: "updateLocationsArray", data: data.data});
 
@@ -191,7 +191,6 @@ lensAF.on("message",(data)=>{
 });
 
 function donationAutomation(/*res*/){
-    var childAF1 = cp.fork(path.dirname(__dirname)+"/station_F@UMN/automationFiles/LOGMASTER.js", [objectNum, "deployment"]);
     //if(res != undefined) res.send({"result":"done"});
 
     childAF1.on("message",(data)=>{
