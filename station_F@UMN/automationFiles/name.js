@@ -58,10 +58,12 @@ function run(){
             var wordsBefore = countWordsBeforeMostCommonWord(combinedWordArray,marker);
             console.log("wordsBefore: "+ JSON.stringify(wordsBefore)+"\n");
 
-            if(wordsBefore.percentage >= addWordToName_thresholdVal && wordsBefore.word != ">>END<<"){
+            if(wordsBefore.percentage >= addWordToName_thresholdVal && wordsBefore.word != ">>END<<" && nameResult.indexOf(wordsBefore.word) == -1){
                 nameResult = wordsBefore.word+" "+nameResult;
                 console.log("New nameResult value: "+nameResult+"\n");
-                recursivelyAddWordsBefore(wordsBefore.word);
+                if(nameResult.split(" ").length < 15){
+                    recursivelyAddWordsBefore(wordsBefore.word);
+                }
             }
         }
         recursivelyAddWordsBefore(mostCommonWord);
@@ -71,10 +73,12 @@ function run(){
             var wordsAfter = countWordsAfterMostCommonWord(combinedWordArray,marker);
             console.log("wordsAfter: "+ JSON.stringify(wordsAfter)+"\n");
 
-            if(wordsAfter.percentage >= addWordToName_thresholdVal && wordsAfter.word != ">>END<<"){
+            if(wordsAfter.percentage >= addWordToName_thresholdVal && wordsAfter.word != ">>END<<" && nameResult.indexOf(wordsAfter.word) == -1){
                 nameResult = nameResult+" "+wordsAfter.word;
                 console.log("New nameResult value: "+nameResult+"\n");
-                recursivelyAddWordsAfter(wordsAfter.word);
+                if(nameResult.split(" ").length < 15){
+                    recursivelyAddWordsAfter(wordsAfter.word);
+                }
             }
         }
         recursivelyAddWordsAfter(mostCommonWord);

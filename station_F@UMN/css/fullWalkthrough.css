@@ -26,11 +26,11 @@
     text-shadow: -6px 10px 2px #00000030;
 }
 #triange1{margin-top: 0vh;}#triange2{ }#rectange1{ }#rectange2{margin-left: -1vw;}#halfCircle1{ }#halfCircle2{margin-left: -1.5vw;}#star1{margin-top: -10vh;margin-left: -0.3vw;}#star2{margin-top: -7vw;}.triangle{margin-left: -20px;}.triangle{
-    width: 0;
-    height: 0;
-    border-left: 55px solid transparent;
-    border-right: 55px solid transparent;
-    border-bottom: 95px solid yellow;
+  width: 0;
+  height: 0;
+  border-left: 55px solid transparent;
+  border-right: 55px solid transparent;
+  border-bottom: 95px solid yellow;
 }.rectangle{
     width: 90px;
     height: 90px;
@@ -462,7 +462,7 @@ body{
     }
     50%{
         margin-top: 20%;
-        margin-left: 42%;
+            margin-left: 42%;
     }
     60%{
         margin-left: 72.7%;
@@ -627,5 +627,5 @@ body{background-color:white}
     opacity:0;
 }
 #outerspacebarWrap{
-    zoom: 2;
+zoom: 2;
 }

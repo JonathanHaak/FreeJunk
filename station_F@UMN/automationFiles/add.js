@@ -29,13 +29,19 @@ async function run() {
     var objectData = JSON.parse(fs.readFileSync(__dirname+"/choppingBoard/obj"+objectNum+"Data.json"));
     console.log("objectData: "+ JSON.stringify(objectData) + " " +typeof(objectData)+"\n");
     
-    puppeteer.launch({headless: production}).then(async browser => {
+    var argsProp = null;
+    if(production){
+        argsProp = ['--start-maximized', '--no-sandbox'];
+    }else{
+        argsProp = ['--start-maximized'];
+    }
+    
+    puppeteer.launch({headless: production, args:argsProp}).then(async browser => {
         c("beginning automation 4");
         const page = await browser.newPage();
         universalPage = page;
         c("Opening addPart page...");
-        await page.goto('http://160.94.179.166:3000/addPart.html');
-
+        await page.goto('https://www.freeumn.com/addPart.html?partData='+encodeURI(JSON.stringify(objectData)));
 
         await page.waitForSelector('#picInput');
         await page.waitForTimeout(1000);
@@ -52,7 +58,9 @@ async function run() {
         
         // Sets the value of the file input to fileToUpload
         inputUploadHandle.uploadFile(fileToUpload);
+        
 
+        /*
         c("Object Name ~ "+objectData.name);
         await page.waitForSelector("#name");
         await page.type("#name",objectData.name);
@@ -86,18 +94,24 @@ async function run() {
         }else{
             console.log("Description does not exist in Object Data, not pressing the add description button");
         }
+        */
+        await page.waitForTimeout(1000);
         
         console.log("Pressing the add button and adding catagory if it does not exist...");
         await page.evaluate(()=>{
             addtoInventory();
-            findAndAddCatagory(a("catagory").value);
         });
+
+        await page.waitForTimeout(1000);
         
         console.log("//////\\\\\\\\||||||||||\\");
         console.log("|| Addition Sucsessful! ||");
         console.log("\\\\\\\\\\\\\\\\\\\///////");
+        
+        
+//        await page.waitForTimeout(3500000);
 
-        await page.waitForTimeout(35000);
+        //await page.waitForTimeout(35000);
         process.exit();
     });
 }

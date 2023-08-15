@@ -18,7 +18,7 @@ function c(str){
 }
 
 async function run() {
-    puppeteer.launch({headless: production,args: ['--start-maximized']}).then(async browser => {
+    puppeteer.launch({headless: production,args: ['--start-maximized', '--no-sandbox']}).then(async browser => {
         c("beginning automation 3");
         const page = await browser.newPage();
         universalPage = page;

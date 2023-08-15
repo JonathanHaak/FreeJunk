@@ -184,7 +184,14 @@ function ResizeImage(uri, callback) {
 function submitImgWrapper(uri){
     console.log("Determining if image is too large to be POST-ed...");
     ResizeImage(uri, ()=>{
-        $.post("/donate", {command: "saveDonationImg", objNum: objectNum, uri: globalURI } );
+        c("URI being posted from the frontend: "+ uri.substring(0,50)+"...");
+
+        incrementObjNum(()=>{
+            getObjNum(()=>{
+                $.post("/donate", {command: "beginDontaion", objNum: objectNum, uri: globalURI, imgPath: "obj"+objectNum+".png", bin: activeBin[0]});        
+                initializeCheck();
+            });
+        });
     });
 }
 

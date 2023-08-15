@@ -88,7 +88,7 @@ document.addEventListener("keypress",(e)=>{
                 a("fadeCurtian").classList.add("fadeIn");
                 setTimeout(()=>{
                     console.log("sending user to donation page...");
-                    window.location = "/?shelf=blue";
+                    window.location = "/donate?shelf=blue";
                     $("body")[0].classList.remove("sunrise");
                     a("fadeCurtian").style.display = "none";
                     a("format1Wrap").remove();

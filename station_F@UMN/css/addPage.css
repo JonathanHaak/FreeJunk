@@ -282,7 +282,7 @@ body{
     border-radius: 9px 9px 9px 16px;
     transition: 1s;
     display: none;
-}#exText{ }#exampleImg{width: 90px;}#capturedImg{z-index: 300;position: absolute;border-radius: 58px;width: 97%;left: 50%;height: 95%;top: 50%;transform: translate(-50%,-50%);}#pressSpacebarToTakePicSplurb{
+}#exText{ }#exampleImg{width: 90px;}#capturedImg{z-index: 300;position: absolute;border-radius: 29px;width: 97%;left: 50%;height: 95%;top: 50%;transform: translate(-50%,-50%);}#pressSpacebarToTakePicSplurb{
     text-align: center;
     width: fit-content;
     position: absolute;
@@ -319,7 +319,7 @@ body{
 }
 #rejectionSplurb{
     position: fixed;
-    font-size: 11em;
+    font-size: 13em;
     padding-top: 10vh;
     /* padding-left: 52px; */
     text-align: center;

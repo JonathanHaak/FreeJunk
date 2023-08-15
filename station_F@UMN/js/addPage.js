@@ -5,15 +5,24 @@ var pageName = window.location.href;
 var shelfColor = pageName.substring(pageName.indexOf("shelf")+6);
 
 var objectNum = null;
-function getObjNum(){
+function getObjNum(callback){
     fetch('/getObjectNum')
         .then(response => response.json())
         .then(data => {
         console.log("Current Object Number value fetched from backend: "+data.objNumber);
         objectNum = data.objNumber;
+        callback();
     });
 }
-getObjNum();
+function incrementObjNum(callback){
+    fetch('/incrementObjectNum')
+        .then(response => response.json())
+        .then(data => {
+        console.log("Object Incremented and is now: "+data.objNumber);
+        objectNum = data.objNumber;
+        callback();
+    });
+}
 
 var activeBin = null;
 
@@ -34,21 +43,23 @@ document.addEventListener("keypress",(e)=>{
 
             //here, capture image and save to a url on the backend
             cam_caputeImg();
+            foldCamBox();
            
             //wait for backend to confirm the image was saved sucsesfully, then...
-            donationAutonmation("obj"+objectNum+".png");
+            //donationAutonmation("obj"+objectNum+".png");
            
         }else if(pageState == "placementMessage"){
             c("lowering curtain and reseting...");
             if(passVal){
                 $.post("/donate", {command: "catagorizeAndLogObject", objNum: objectNum, bin: activeBin[0]});
             }
-            resetFrontend();
             pageState = "floating";
             if(passVal){
                 lowerCurtain("pass");
+                alert("Waiting for backend to say donation complete")
             }else{
                 lowerCurtain("fail");
+                resetFrontend();
             }
         }
     }else if(e.keyCode == 13){
@@ -86,11 +97,11 @@ function ticker(){
 //setInterval(ticker,1000);
 
 //----------------------Donation Triggering---------------------------------------------------------------------------------------------------------------------
-function donationAutonmation(imagePath){
+/*function donationAutonmation(imagePath){
     c("donationAutonmation() called for image: "+imagePath);
     $.post("/donate", {command: "beginDontaion", imgPath: imagePath, bin: activeBin[0]});
     foldCamBox();
-}
+}*/
 
 //----------------------UI Animation Control--------------------------------------------------------------------------------------------------------------------
 function raiseCurtain(passFailStr){
@@ -180,7 +191,6 @@ function lowerCurtain(passFailStr){
         a("rejectionSplurb").style = "";
         a("spacebarToTryAgain").style = "";        
         expandCamBox();
-        getObjNum();
 
     },2000);
 }
@@ -214,7 +224,7 @@ function foldCamBox(){
         a("imageWrap").style.height = "65%";
         a("imageWrap").style.width = "50%";
         a("imageWrap").classList.remove("foldBack");
-        initializeCheck();
+        
     },1000);
     a("pressSpacebarToTakePicSplurb").style = "opacity: 0";
     a("imgExWrap").style = "opacity: 0";
@@ -223,7 +233,7 @@ function foldCamBox(){
 
 //----------------------Criteria Checking-----------------------------------------------------------------------------------------------------------------------
 function fetchCriteriaResult(num, callback){
-    console.log("Waiting for criteria "+num+" check...");
+    console.log("Waiting for criteria "+num+" check on object "+objectNum+"...");
     fetch('/criteriaCheck?cNum='+num+'&oNum='+objectNum)
         .then(response => response.json())
         .then(data => {
@@ -284,6 +294,7 @@ var criteriaResults = ["pass"];
 var passVal = null;
 
 function passORfail(){
+    numCriteriaPassed = 1;
     passVal = (criteriaResults[0] == "pass" && criteriaResults[1] == "pass" && criteriaResults[2] == "pass");
     c("passVal: "+ passVal);
     if(passVal){
@@ -335,7 +346,6 @@ function resetFrontend(){
     a("c1_fail").style.display = "none";
     a("c2_fail").style.display = "none";
     a("c3_fail").style.display = "none";
-    getObjNum();
 }
 
 

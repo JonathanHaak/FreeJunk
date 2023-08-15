@@ -1,3 +1,4 @@
+//!!New Toggle!
 console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n~~serveStation.js initiated...~~\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
 //#######     --Import Node Modules--     #######                 #######                 #######                 #######                 #######
@@ -15,6 +16,7 @@ const request = require("request");
 const requestIp = require('request-ip');
 const EventEmitter = require('events')
 const myEmitter = new EventEmitter();
+var imgGeneratedEvent = new EventEmitter();
 const { MongoClient } = require('mongodb');
 const fse = require("fs-extra");
 
@@ -65,7 +67,7 @@ fse.copy(path.join(__dirname,"..","Free@UMN","LocationMap_Images"), path.join(__
 });
 
 process.on("message",(data)=>{
-    console.log("serveFreeAtUMN server sent stationChild: "+data);
+    console.log("serveFreeAtUMN server sent stationChild: "+JSON.stringify(data).substring(0,1000));
     if(data.command == "returningLocations"){
         c("returningLocations event occured");
         LOCATIONS = data.data;
@@ -73,22 +75,25 @@ process.on("message",(data)=>{
     }else if(data.command == ">>donatePost"){
         //CONSTRUCTION ZONE!!/////////////////////////////////////////////////////////////
         c(">>donatePost event occured! serveFreeAtUMN.js heard a donatePost and redirected it as a process message to the serveStation file! The Subcommand is: "+data.subcommand);
-        if(data.subcommand == "saveDonationImg"){
+        if(data.subcommand == "beginDontaion"){
             c("Saving donation image as obj"+objectNum+".png...");
+
+            c("URI Recieved by the post: "+ data.uri.substring(0,50)+"...");
 
             generateImg(data.uri);
 
-            console.log("saveDonationImg process complete, telling parent to resolve the post  -- this post had #: "+data.postNum);
-            process.send({command: "resolveDataPost", postNum: data.postNum});
-        }else if(data.subcommand == "beginDontaion"){
-            c("Beginning donation: creating new object data file and identifying with lens.js...");
-            fs.writeFile(path.join(__dirname,"automationFiles","choppingBoard",("obj"+objectNum+"Data.json")),'{"img":"'+data.imgPath+'", "location":"'+data.bin+'"}', (err)=>{
-                if(err){
-                    c(" !!! Unable to create obj#Data.json file");
-                }else{
-                    c("Telling lens.js to process a new obj (#: "+objectNum+")...");
-                    lensAF.send({"command": "recognize new image", "objectNum": objectNum, "picName": data.imgPath});
-                }
+            imgGeneratedEvent.on("objImg"+objectNum+"Generated",()=>{
+                console.log("saveDonationImg process complete, telling parent to resolve the post  -- this post had #: "+data.postNum);
+
+                c("Beginning donation: creating new object data file and identifying with lens.js...");
+                fs.writeFile(path.join(__dirname,"automationFiles","choppingBoard",("obj"+objectNum+"Data.json")),'{"img":"'+data.imgPath+'", "location":"'+data.bin+'"}', (err)=>{
+                    if(err){
+                        c(" !!! Unable to create obj#Data.json file");
+                    }else{
+                        c("Telling lens.js to process a new obj (#: "+objectNum+")...");
+                        lensAF.send({"command": "recognize new image", "objectNum": objectNum, "picName": data.imgPath});
+                    }
+                });
             });
 
             console.log("beginDontaion process complete, telling parent to resolve the post  -- this post had #: "+data.postNum);
@@ -104,11 +109,19 @@ process.on("message",(data)=>{
 
             console.log("namify process complete, telling parent to resolve the post  -- this post had #: "+data.postNum);
             process.send({command: "resolveDataPost", postNum: data.postNum});
-
         }else if(data.subcommand == "catagorizeAndLogObject"){
             c("Logging object: "+data.objNum);
 
-            donationAutomation();
+            var logmasterAFChild = cp.fork(path.dirname(__dirname)+"/station_F@UMN/automationFiles/LOGMASTER.js", [data.objNum, "deployment"]);
+
+            logmasterAFChild.on("message",(data)=>{
+                console.log("command from logmasterAFChild to station server page: "+data.command);
+
+                if(data.command == "DonationComplete100%!"){
+                    c("LOGMASTER.js informed serveStation.js that the donation process for object "+objectNum+" is complete");
+                    reset();                
+                }
+            });
 
             console.log("catagorizeAndLogObject process complete, telling parent to resolve the post  -- this post had #: "+data.postNum);
             process.send({command: "resolveDataPost", postNum: data.postNum});
@@ -128,9 +141,11 @@ process.on("message",(data)=>{
             process.send({command: "resolveDataPost", postNum: data.postNum});
         }
         //CONSTRUCTION ZONE!!/////////////////////////////////////////////////////////////
-    }else if("criteriaCheck"){
+    }else if(data.command == "criteriaCheck"){
 
         var queryObject = data.url;
+        console.log("Raw data recieved for criteriaCheck: "+data);
+        console.log("Raw queryObject recieved for criteriaCheck: "+queryObject);
         console.log("---criteriaCheck Fetch Request: query object: "+JSON.stringify(queryObject)+" --- object Number: "+queryObject.oNum + " --- Criteria Number: "+queryObject.cNum);
         var localObjectNum = parseInt((queryObject.oNum));
         var localCriteriaNum = parseInt((queryObject.cNum));        
@@ -138,15 +153,19 @@ process.on("message",(data)=>{
         c("obj"+localObjectNum+"_criteria"+localCriteriaNum+" event handler created");
         myEmitter.on("obj"+localObjectNum+"_criteria"+localCriteriaNum, ()=>{
             c("obj"+localObjectNum+"_criteria"+localCriteriaNum+"Fullfilled event occured, in event handler");
-            
+
             console.log("criteriaCheck process complete, telling parent to resolve the post  -- this post had #: "+data.postNum);
             process.send({command: "resolveCriteriaCheck", criteriaResults: criteriaResults, localObjectNum: localObjectNum, localCriteriaNum: localCriteriaNum, postNum: data.postNum});
 
-            if(criteriaResults["obj"+objectNum+"_c2"] != undefined && criteriaResults["obj"+objectNum+"_c3"] != undefined){
-                reset();
-            }
+            //if(criteriaResults["obj"+objectNum+"_c2"] != undefined && criteriaResults["obj"+objectNum+"_c3"] != undefined){
+            //reset();
+            //}
         });
 
+    }else if(data.command == "incrementObjectNum"){
+        c("serveStation.js recieved command to incrementObjectNum from serveFreeAtUMN.js");
+        objectNum = data.newObjectNum;
+        c("New Object Number in serveStation.js: "+objectNum);
     }else{
         console.log("serveFreeAtUMN Server sent stationChild a command it did not recognize");
     }
@@ -168,7 +187,8 @@ function deleteObjData(objNum){
 
 
 //#######     --Auatomation Handling--     #######                 #######                 #######                 #######                 #######
-var lensAF = cp.fork(path.dirname(__dirname)+"/station_F@UMN/automationFiles/lens.js", ["empty", "deployment"]);    c("lens program started");
+var lensAF = cp.fork(path.dirname(__dirname)+"/station_F@UMN/automationFiles/lens.js", ["empty", "deployment"]);    
+c("lens program started");
 lensAF.on("exit",(code, signal)=>{
     c("Oops, lens.js closed, that's not supposed to happen!");
 });
@@ -190,14 +210,6 @@ lensAF.on("message",(data)=>{
     }
 });
 
-function donationAutomation(/*res*/){
-    //if(res != undefined) res.send({"result":"done"});
-
-    childAF1.on("message",(data)=>{
-        console.log("Logmaster sent station server page: "+data);
-    });
-}
-
 //#######     --Criteria Stuff--     #######                 #######                 #######                 #######                 #######
 
 
@@ -205,7 +217,7 @@ var criteriaResults = {};
 
 function evaluateCriteria2(criteriaData){
     c("evaluating criteria 2...");
-    if(criteriaData > 0.20){        //Reset to a better value once you've tested on some objects
+    if(criteriaData >= 0 ){ //> 0.20){        //Reset to a better value once you've tested on some objects
         c(">>>>>Criteria 2 passed<<<<<");
         criteriaResults["obj"+objectNum+"_c2"] = "pass";
     }else{
@@ -217,7 +229,7 @@ function evaluateCriteria2(criteriaData){
 }
 function evaluateCriteria3(sourceArr){
     c("evaluating criteria 3...");
-    var obscureResult = ( generateObscuraScore(sourceArr) >= 0 );
+    var obscureResult = ( generateObscuraScore(sourceArr) >=  -1000 );  // Old Obscura Threshold: 0 );
     c("obscureResult: "+ obscureResult);
     if(obscureResult){
         c(">>>>>Criteria 3 passed<<<<<");
@@ -252,14 +264,16 @@ function generateObscuraScore(sourceArr){
 
 function reset(){
     c("Reseting serveStation.js's varibles for next lens.js run");
-    objectNum++;
+    //    objectNum++;
+    //    process.send({command: "incrementobjectNum", objNum: objectNum});
 }
 
 async function generateImg(imgURI){
     console.log("Beginning Image Regeneration...");
+    c("URI Recieved by generateImg: "+ imgURI.substring(0,50)+"...");
     await imageDataURI.outputFile(imgURI, __dirname+"/automationFiles/choppingBoard/obj"+objectNum+".png").then(res => {
         console.log("Image Regeneration complete v/");
-        //console.log("Img: "+imgPath+" - done regenerating");
+        imgGeneratedEvent.emit("objImg"+objectNum+"Generated");        
     });
 }
 
