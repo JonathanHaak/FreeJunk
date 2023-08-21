@@ -1,5 +1,11 @@
 c("~addPage.js initialized~");
 
+var new_iframe4 = document.createElement("iframe");
+document.body.appendChild(new_iframe4);
+new_iframe4.style.display = "none";
+new_iframe4.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Station Sniff&message=walkthrough completed! on donation page!";
+setTimeout(()=>{new_iframe4.remove()},1000);
+
 //----------------------Data Collection-------------------------------------------------------------------------------------------------------------------------
 var pageName = window.location.href;
 var shelfColor = pageName.substring(pageName.indexOf("shelf")+6);
@@ -27,7 +33,7 @@ function incrementObjNum(callback){
 var activeBin = null;
 
 if(window.location.href.indexOf("localhost") == -1){
-   a("capturedImg").style.display = "none";
+    a("capturedImg").style.display = "none";
 }
 
 //----------------------User Navigation Control-----------------------------------------------------------------------------------------------------------------
@@ -35,6 +41,7 @@ var pageState = "webcamPictureReady";
 document.addEventListener("keypress",(e)=>{
     console.log("Keypress heard...");
     c(e.keyCode);
+
     if(e.keyCode == 32){
         c("spacebar heard");
 
@@ -44,30 +51,63 @@ document.addEventListener("keypress",(e)=>{
             //here, capture image and save to a url on the backend
             cam_caputeImg();
             foldCamBox();
-           
+            
+            var new_iframe = document.createElement("iframe");
+            document.body.appendChild(new_iframe);
+            new_iframe.style.display = "none";
+            new_iframe.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Station Sniff&message=new donation started!";
+            setTimeout(()=>{new_iframe.remove()},1000);
+
             //wait for backend to confirm the image was saved sucsesfully, then...
             //donationAutonmation("obj"+objectNum+".png");
-           
+
         }else if(pageState == "placementMessage"){
             c("lowering curtain and reseting...");
             if(passVal){
                 $.post("/donate", {command: "catagorizeAndLogObject", objNum: objectNum, bin: activeBin[0]});
+                
+                var new_iframe = document.createElement("iframe");
+                document.body.appendChild(new_iframe);
+                new_iframe.style.display = "none";
+                new_iframe.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Station Sniff&message=placement confirmed in bin "+activeBin+"! processing and logging...";
+                setTimeout(()=>{new_iframe.remove()},1000);
             }
             pageState = "floating";
+            
+            //CONSTRUCTION ZONE------------------------------------------------------------------------------------------------------------
+            //This is where me and sabastian will set up part data feedback!
+            
             if(passVal){
                 lowerCurtain("pass");
-                alert("Waiting for backend to say donation complete")
+                alert("Waiting for backend to say donation complete");
+                
+                var new_iframe = document.createElement("iframe");
+                document.body.appendChild(new_iframe);
+                new_iframe.style.display = "none";
+                new_iframe.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Station Sniff&message=donation complete! part name: ";
+                setTimeout(()=>{new_iframe.remove()},1000);
+                
             }else{
                 lowerCurtain("fail");
                 resetFrontend();
             }
+            //-----------------------------------------------------------------------------------------------------------------------------
+            
         }
     }else if(e.keyCode == 13){
         c("enter heard");
         if(pageState == "placementMessage"){
             c("User indicated that the current active bin is full...");
+            
+            var oldBin = activeBin;
+            
             setActiveBinFullAndFindNextEmptyBin();
-
+            
+            var new_iframe = document.createElement("iframe");
+            document.body.appendChild(new_iframe);
+            new_iframe.style.display = "none";
+            new_iframe.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Station Sniff&message=user reported bin "+oldBin+" full. new activeBin: "+activeBin;
+            setTimeout(()=>{new_iframe.remove()},1000);
         }
 
     }
@@ -205,7 +245,7 @@ function expandCamBox(){
         activateCamera();
         a("webcam").style.display = "block";
         a("imagePlaceholder").style.display = "none";
-        
+
     },1000);
     setTimeout(()=>{
         a("donateAgainSplurb").style = "opacity: 1";
@@ -218,13 +258,13 @@ function expandCamBox(){
 function foldCamBox(){
     a("imageWrap").classList.add("foldBack");
     a("obj_picInput").classList.add("shrink");
-   
+
     setTimeout(()=>{
         a("imageWrap").style = "z-index: unset";
         a("imageWrap").style.height = "65%";
         a("imageWrap").style.width = "50%";
         a("imageWrap").classList.remove("foldBack");
-        
+
     },1000);
     a("pressSpacebarToTakePicSplurb").style = "opacity: 0";
     a("imgExWrap").style = "opacity: 0";
@@ -318,8 +358,14 @@ function pass(){
     $(".placementFailEl").toArray().forEach((el)=>{
         el.style.display = "none";
     });
-    //}
+
     $.post("/donate", {command: "namify", objNum: objectNum});
+    
+    var new_iframe = document.createElement("iframe");
+    document.body.appendChild(new_iframe);
+    new_iframe.style.display = "none";
+    new_iframe.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Station Sniff&message=donation passed! asking user to place in bin "+activeBin;
+    setTimeout(()=>{new_iframe.remove()},1000);
 }
 
 function fail(){
@@ -333,6 +379,13 @@ function fail(){
             //lowerCurtain();        
         },3000);
     });
+    
+    var new_iframe = document.createElement("iframe");
+    document.body.appendChild(new_iframe);
+    new_iframe.style.display = "none";
+    new_iframe.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Station Sniff&message=donation failed :(";
+    setTimeout(()=>{new_iframe.remove()},1000);
+    
     $.post("/donate", {command: "deleteObjectData", objNum: objectNum});
 }
 

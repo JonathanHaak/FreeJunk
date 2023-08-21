@@ -34,18 +34,25 @@ window.onload = function(){
     fetch_CATAGORIES(fetch2Wrap);
 }
 
+var pageType = "standard";
 function startup(){
     createAndShuffle_CycleOrder();
     if(window.location.href.indexOf("pageType")!=-1){
-        var pageType = window.location.href.substring(window.location.href.indexOf("pageType=")+9);
+        pageType = window.location.href.substring(window.location.href.indexOf("pageType=")+9);
         if(pageType == 'cover'){
+
+            var new_iframe = document.createElement("iframe");
+            document.body.appendChild(new_iframe);
+            new_iframe.style.display = "none";
+            new_iframe.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Cover Page Sniff&message=coverpage loaded";
+            setTimeout(()=>{new_iframe.remove()},1000);            
 
             document.addEventListener("searchComplete",()=>{
                 console.log("searchCompleteEvent dispached...");
                 console.log("Current value of img_fetchQueue: "+JSON.stringify(img_fetchQueue));
-                
+
                 var capturedImageArray = img_fetchQueue;
-                
+
                 for(var i = 0; i < document.body.children.length; i++){
                     document.body.children[i].remove();
                 }
@@ -58,13 +65,15 @@ function startup(){
                 var coverJS = document.createElement("script");
                 coverJS.src = "./js/coverScreen.js";
                 document.head.append(coverJS);
-                
+
                 coverJS.onload = ()=>{
                     objectsInsideImgArr = capturedImageArray;
                     startTiles();
                 };
-                
+
             });
+        }else{
+            $.post("/", {command: "VAHCS_sniff", data: getCookie("userToken")});
         }
     }
     if(window.location.href.indexOf("search")!=-1){
@@ -153,7 +162,7 @@ function startup(){
             var new_iframe = document.createElement("iframe");
             document.body.appendChild(new_iframe);
             new_iframe.style.display = "none";
-            new_iframe.src="https://vahcs-server.herokuapp.com/captureAction?action="+encodeURI("new inventory file loaded")+"&origin="+encodeURI("free@umn")+"&data="+encodeURI(JSON.stringify(Inventory[inventoryLoc]))+"&ip="+encodeURI(getCookie("userToken"));
+            new_iframe.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Catalog Sniff&message=user clicked load next inventory file!";
             setTimeout(()=>{new_iframe.remove()},1000);
         }else{
             window.addEventListener("scroll",windowScrollAutoloadStuff);
@@ -171,7 +180,7 @@ function startup(){
         document.body.appendChild(new_iframe);
         new_iframe.style.display = "none";
         claimedItem = Inventory[inventoryLoc];
-        new_iframe.src="https://vahcs-server.herokuapp.com/captureAction?action="+encodeURI("claim button press")+"&origin="+encodeURI("free@umn")+"&data="+encodeURI(JSON.stringify(Inventory[inventoryLoc]))+"&ip="+encodeURI(getCookie("userToken"));
+        new_iframe.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Catalog Sniff&message=claim button pressed on "+JSON.stringify(Inventory[inventoryLoc])+"!";
         setTimeout(()=>{new_iframe.remove()},1000);
         b("claimStageElement").forEach((el)=>{
             el.style.display = "block";
@@ -199,7 +208,7 @@ function startup(){
         var new_iframe = document.createElement("iframe");
         document.body.appendChild(new_iframe);
         new_iframe.style.display = "none";
-        new_iframe.src="https://vahcs-server.herokuapp.com/captureAction?action="+encodeURI("take button press")+"&origin="+encodeURI("free@umn")+"&data="+encodeURI(JSON.stringify(Inventory[inventoryLoc]))+"&ip="+encodeURI(getCookie("userToken"));
+        new_iframe.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Catalog Sniff&message=take button pressed on "+JSON.stringify(Inventory[inventoryLoc])+"!";
         setTimeout(()=>{new_iframe.remove()},1000);
         claimedItem = "";
         var binArray = findArrayByString(Inventory[eval(a("fooTile").children[0].children[2].content)][0][0][1]);
@@ -223,7 +232,7 @@ function startup(){
         var new_iframe = document.createElement("iframe");
         document.body.appendChild(new_iframe);
         new_iframe.style.display = "none";
-        new_iframe.src="https://vahcs-server.herokuapp.com/captureAction?action="+encodeURI("abort button press")+"&origin="+encodeURI("free@umn")+"&data="+encodeURI(JSON.stringify(Inventory[inventoryLoc]))+"&ip="+encodeURI(getCookie("userToken"));
+        new_iframe.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Catalog Sniff&message=abort button pressed on "+JSON.stringify(Inventory[inventoryLoc])+"!";
         setTimeout(()=>{new_iframe.remove()},1000);
         claimedItem = "";
     });
@@ -236,7 +245,7 @@ function startup(){
         var new_iframe = document.createElement("iframe");
         document.body.appendChild(new_iframe);
         new_iframe.style.display = "none";
-        new_iframe.src="https://vahcs-server.herokuapp.com/captureAction?action="+encodeURI("where is this? button press")+"&origin="+encodeURI("free@umn")+"&data="+encodeURI(Inventory[inventoryLoc][0][0][0])+"&ip="+encodeURI(getCookie("userToken"));
+        new_iframe.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Catalog Sniff&message=where is this? button pressed on "+JSON.stringify(Inventory[inventoryLoc])+"!";
         setTimeout(()=>{new_iframe.remove()},1000);
         claimedItem = "";
     });
@@ -331,7 +340,6 @@ function startup(){
         window.addEventListener("scroll",windowScrollAutoloadStuff);
     }
 
-    $.post("/", {command: "VAHCS_sniff", data: getCookie("userToken")});
     fetch_USERMODE(toggleUserMode);
 }
 
@@ -359,11 +367,13 @@ function resetObjectClaimPanel(){
 }
 
 window.addEventListener('resize',()=> {
-    console.log("window resized...");
-    setTimeout(()=>{
-        optimizeForDevice();
-    },10);
-    $("#noResultsBanner")[0].style.fontSize = document.body.clientWidth/20;
+    if(pageType != "cover"){
+        console.log("window resized...");
+        setTimeout(()=>{
+            optimizeForDevice();
+        },10);
+        $("#noResultsBanner")[0].style.fontSize = document.body.clientWidth/20;
+    }
 });
 
 function resizeZoomImg(){
@@ -1029,11 +1039,13 @@ function confirmationAnimation(){
     elem.classList.add("CB_RunAnimation");
 }
 function windowScrollAutoloadStuff(){
-    if(!scrollCheckPaused){
-        console.log("threshold: "+(a("tilesHolder").clientHeight - a("body").clientHeight)+"  scroll: " +a("body").scrollTop);
-        if((a("tilesHolder").clientHeight - a("body").clientHeight) < a("body").scrollTop) {
-            a("loadPartsButton").click();
-            scrollCheckPaused = true;
+    if(INVENTORYFiles_Count > INVENTORYFiles_CyclesRun){
+        if(!scrollCheckPaused){
+            console.log("threshold: "+(a("tilesHolder").clientHeight - a("body").clientHeight)+"  scroll: " +a("body").scrollTop);
+            if((a("tilesHolder").clientHeight - a("body").clientHeight) < a("body").scrollTop) {
+                a("loadPartsButton").click();
+                scrollCheckPaused = true;
+            }
         }
     }
 }
@@ -1463,8 +1475,8 @@ function searchLocLayer(layer, target){
                 return true;
                 break Loop;
             }
-            if(eval(layerObject).length != 4){
-                var newLayer = layerObject+"[4]";
+            if(eval(layerObject).length != 3){
+                var newLayer = layerObject+"[3]";
                 searchLocLayer(newLayer, target);
             }
         }
@@ -1532,9 +1544,9 @@ function conduct_locationSearch(location, type, currentLocIndexStr){   //type sp
         console.log(">>>>>Catagory Leaf Search Complete, query had "+numberofSubLocationHits+" Matches (s)<<<<<");
     }
     //debugger;
-    if(eval(currentLocIndexStr).length == 5){   //Recursive Leaf Search
-        for(var i = 0; i<eval(currentLocIndexStr)[4].length; i++){
-            var curentLocObject = eval(currentLocIndexStr)[4][i];
+    if(eval(currentLocIndexStr).length == 7){   //Recursive Leaf Search
+        for(var i = 0; i<eval(currentLocIndexStr)[3].length; i++){
+            var curentLocObject = eval(currentLocIndexStr)[3][i];
             try{
                 conduct_locationSearch(eval(curentLocObject)[0], "SubLocations", curentLocObject);
             }catch{
@@ -1600,7 +1612,7 @@ function fullSearch(){
     var new_iframe = document.createElement("iframe");
     document.body.appendChild(new_iframe);
     new_iframe.style.display = "none";
-    new_iframe.src="https://vahcs-server.herokuapp.com/captureAction?"+"&origin="+encodeURI("free@umn")+"&action=search&data="+encodeURI(searchTerm)+"&ip="+encodeURI(getCookie("userToken"));
+    new_iframe.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Catalog Sniff&message=Somone ran a full search for: "+searchTerm+"!";    
     setTimeout(()=>{new_iframe.remove()},1000);
 
     searchTermTesting:{
@@ -1643,6 +1655,13 @@ function fullSearch(){
     }
 }
 function catSearch(){
+
+    var new_iframe = document.createElement("iframe");
+    document.body.appendChild(new_iframe);
+    new_iframe.style.display = "none";
+    new_iframe.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Catalog Sniff&message=Somone searched for catagory: "+searchTerm+"!";    
+    setTimeout(()=>{new_iframe.remove()},1000);
+
     console.log("Enter keypress was heard, regular search exchanged for a catagory search, or catBlock clicked; running search...");
     searchTerm = document.getElementById("inquiry").value.toLowerCase();
     console.log("Seach query recorded: " + searchTerm);
@@ -1673,6 +1692,13 @@ function catSearch(){
 }
 
 function locSearch(){
+
+    var new_iframe = document.createElement("iframe");
+    document.body.appendChild(new_iframe);
+    new_iframe.style.display = "none";
+    new_iframe.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Catalog Sniff&message=Somone searched for location: "+searchTerm+"!";    
+    setTimeout(()=>{new_iframe.remove()},1000);
+
     console.log("Location type search triggered from url, or ; running search...");
     searchTerm = document.getElementById("inquiry").value.toLowerCase(); //window.location.href.substring(window.location.href.indexOf("searchTerm")+10+1)
     console.log("Seach query recorded: " + searchTerm);
@@ -1693,7 +1719,7 @@ function locSearch(){
             result_fragIndexes = [];
             prepareScreenForResults("Location"); //Prepare Screen for Matches
             createSearchingTile(document.getElementById("search_tilesHolder"+"Location"), "Location");
-            if(eval(locationIndexStr).length == 5){
+            if(eval(locationIndexStr).length == 7){
                 console.log("The location the user searched for has sub-locations! Ajusting the DOM accordingly...");
                 prepareScreenForResults("SubLocations");
                 createSearchingTile(document.getElementById("search_tilesHolder"+"SubLocations"), "SubLocations");

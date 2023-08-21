@@ -29,7 +29,7 @@ function populateTile(tileNum, imageIndex){
     },newTileDelay);
 }
 
-var newTileDelay = 2000;
+var newTileDelay = 4000;
 
 function startTiles(){
     c("startTiles() beginning, filling in all 7 tiles...");
@@ -57,7 +57,7 @@ function recursivelyCallPopulate(i){
 }
 
 var i = 7;
-//setInterval(()=>{recursivelyCallPopulate(i++)},newTileDelay);
+setInterval(()=>{recursivelyCallPopulate(i++)},newTileDelay);
 
 setTimeout(()=>{    //Reload this page every hour to caputure changes
     c("Reloading cover page to capture changes...");

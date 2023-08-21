@@ -9,6 +9,13 @@ document.addEventListener("keypress",(e)=>{
         case 0:
             console.log("Walkthrough Step 2...");
             console.log("Criteria Step 1...");
+
+            var new_iframe1 = document.createElement("iframe");
+            document.body.appendChild(new_iframe1);
+            new_iframe1.style.display = "none";
+            new_iframe1.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Station Sniff&message=walkthrough screensaver shattered!";
+            setTimeout(()=>{new_iframe1.remove()},1000);
+
             sweapAwayScreensaver();
             setTimeout(()=>{
                 a("criteriaPageWrap").style.display = "block";
@@ -21,6 +28,7 @@ document.addEventListener("keypress",(e)=>{
                 switch(criteriaStep){
                     case 1:
                         console.log("Criteria Step 2...");
+
                         a("criteria2_block").classList.add("fadeIn");            
                         a("spacebarWrapper").classList.remove("fadeInAndUpWait2");
                         a("spacebarWrapper").style.top="70vh";
@@ -48,6 +56,13 @@ document.addEventListener("keypress",(e)=>{
                         break;
                     case 3:
                         console.log("Criteria Step 3...");
+
+                        var new_iframe3 = document.createElement("iframe");
+                        document.body.appendChild(new_iframe3);
+                        new_iframe3.style.display = "none";
+                        new_iframe2.src="https://alertzy.app/send?accountKey=m143fegulr79ila&title=Free@UMN Station Sniff&message=walkthrough criteria list passed!";
+                        setTimeout(()=>{new_iframe3.remove()},1000);
+
                         a("donatedItemSpan").classList.remove("fadeInAndUp");
                         a("spacebarWrapper").classList.remove("fadeInAndUp");
                         a("spacebarWrapper").style.opacity="0";
@@ -84,6 +99,7 @@ document.addEventListener("keypress",(e)=>{
             c(e.keyCode);
             if(e.keyCode == 32){
                 console.log("Walkthrough Complete...");
+
                 a("fadeCurtian").style.display = "block";
                 a("fadeCurtian").classList.add("fadeIn");
                 setTimeout(()=>{
@@ -93,7 +109,7 @@ document.addEventListener("keypress",(e)=>{
                     a("fadeCurtian").style.display = "none";
                     a("format1Wrap").remove();
                     clearInterval(animation1Interval);
-                    
+
                 },1000);
                 walkthroughStep++;
                 break;
