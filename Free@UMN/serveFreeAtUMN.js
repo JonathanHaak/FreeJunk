@@ -1040,6 +1040,7 @@ function generateQRsWrap(x,y,c,r){
     yIndex = 1;
 
     //Generate the first QR Code
+    
     QRCode.toDataURL('https://freeumn.com/?search=["'+c+'","location"]', function (err, code) {
         if(err) return console.log("error occurred");
         console.log(code);

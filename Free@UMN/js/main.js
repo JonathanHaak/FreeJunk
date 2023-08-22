@@ -80,7 +80,7 @@ function startup(){
         if(getCookie("SEARCHQUERY") != ""){
             alert("Uh oh, conflicting search cookies! URL Search cookie takes presidence, press okay to contiue...");
         }
-        setCookie("SEARCHQUERY",decodeURI(window.location.href.substring(window.location.href.indexOf("search=")+7, window.location.href.indexOf("location")+12)),100000);
+        setCookie("SEARCHQUERY",decodeURI(window.location.href.substring(decodeURI(window.location.href.indexOf("search=")+7), decodeURI(window.location.href.indexOf("location")+12))),100000);
     }
 
     if(getCookie("SEARCHQUERY") != ""/*document.querySelector("meta[name=queryDATA]").getAttribute("content") != "[\"\",\"\"]"*/){
